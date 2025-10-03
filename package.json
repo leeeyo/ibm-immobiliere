@@ -9,10 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "framer-motion": "^12.23.22",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.0",
     "next": "^15.2.3",
+    "next-intl": "^4.3.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.15"
+    "react-hook-form": "^7.63.0",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^4.0.15",
+    "zod": "^4.1.11",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/node": "^22.13.11",
