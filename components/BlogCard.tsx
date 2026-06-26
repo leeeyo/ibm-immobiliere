@@ -1,17 +1,18 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link"
+import Image from "next/image"
 
 interface BlogCardProps {
-  slug: string;
-  title: string;
-  excerpt: string;
-  author: string;
-  featuredImage: string;
-  category: string;
-  createdAt: Date;
+  slug: string
+  title: string
+  excerpt: string
+  author: string
+  featuredImage: string
+  featuredImageAlt?: string
+  category: string
+  audienceLabel?: string
+  createdAt?: string
+  /** Niveau de titre pour l’accessibilité (hiérarchie sur la page) */
+  titleHeading?: "h2" | "h3"
 }
 
 export default function BlogCard({
@@ -20,63 +21,76 @@ export default function BlogCard({
   excerpt,
   author,
   featuredImage,
+  featuredImageAlt,
   category,
+  audienceLabel,
   createdAt,
+  titleHeading = "h3",
 }: BlogCardProps) {
-  const formattedDate = new Date(createdAt).toLocaleDateString('fr-FR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  });
+  const formattedDate = createdAt
+    ? new Date(createdAt).toLocaleDateString("fr-TN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : ""
+  const isoDate = createdAt ? new Date(createdAt).toISOString() : undefined
+  const imgAlt = featuredImageAlt || title
+  const HeadingTag = titleHeading
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow group"
-    >
-      <Link href={`/blog/${slug}`}>
-        <div className="relative h-56 overflow-hidden">
+    <article className="group border-b border-neutral-200 pb-12 last:border-b-0 last:pb-0 lg:flex lg:h-full lg:flex-col lg:rounded-xl lg:border lg:border-neutral-200 lg:bg-white lg:pb-0 lg:shadow-sm lg:transition-shadow lg:last:border-b lg:hover:shadow-md">
+      <Link
+        href={`/blog/${slug}`}
+        className="flex h-full min-h-0 flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)] lg:rounded-xl"
+      >
+        <div className="overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 lg:rounded-none lg:border-0 lg:border-b lg:border-neutral-200">
           <Image
-            src={featuredImage}
-            alt={title}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            src={featuredImage || "/IBM_logo_black_transparent.png"}
+            alt={imgAlt}
+            width={880}
+            height={495}
+            className="aspect-[16/9] h-auto w-full object-cover transition-opacity duration-200 group-hover:opacity-95"
+            sizes="(max-width: 1023px) 100vw, (max-width: 1280px) 45vw, 34rem"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-            {category}
-          </div>
         </div>
 
-        <div className="p-6">
-          <div className="flex items-center text-sm text-slate-500 mb-3">
-            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <time dateTime={createdAt.toString()}>{formattedDate}</time>
-            <span className="mx-2">•</span>
-            <span>{author}</span>
-          </div>
+        <div className="mt-5 lg:mt-0 lg:flex lg:flex-1 lg:flex-col lg:p-6">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-muted)]">
+            {category}
+            {audienceLabel ? (
+              <>
+                <span className="mx-2 font-normal text-neutral-300" aria-hidden="true">
+                  ·
+                </span>
+                <span className="normal-case tracking-normal">{audienceLabel}</span>
+              </>
+            ) : null}
+          </p>
 
-          <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <HeadingTag className="mt-2 font-[family-name:var(--font-display)] text-xl font-semibold leading-snug tracking-tight text-[var(--color-foreground)] text-balance group-hover:text-[var(--color-primary)] transition-colors sm:text-2xl lg:text-[1.375rem] lg:leading-snug">
             {title}
-          </h3>
+          </HeadingTag>
 
-          <p className="text-slate-600 mb-4 line-clamp-3">
+          <p className="mt-3 text-base leading-relaxed text-[var(--color-muted)] lg:line-clamp-5 lg:flex-1">
             {excerpt}
           </p>
 
-          <div className="flex items-center text-blue-600 font-medium group-hover:gap-2 transition-all">
-            Lire l&apos;article
-            <svg className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--color-muted)]">
+            {isoDate ? (
+              <time dateTime={isoDate} className="tabular-nums">
+                {formattedDate}
+              </time>
+            ) : null}
+            {isoDate ? <span aria-hidden="true">·</span> : null}
+            <span>{author}</span>
           </div>
+
+          <span className="mt-4 inline-flex text-sm font-medium text-[var(--color-primary)] underline-offset-4 group-hover:underline">
+            Lire l&apos;article
+          </span>
         </div>
       </Link>
-    </motion.article>
-  );
+    </article>
+  )
 }

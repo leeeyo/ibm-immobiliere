@@ -22,3 +22,12 @@ To learn more about Next.js, take a look at the following resources:
 To make your next App run smoothly in production make sure to deploy your project with [Repl Deployments](https://docs.replit.com/hosting/deployments/about-deployments)!
 
 You can also produce a production build by running `npm run build` and [changing the run command](https://docs.replit.com/programming-ide/configuring-repl#run) to `npm run start`.
+
+## Analytics and Ad Tracking
+
+GA4, Meta Pixel, and Meta Conversions API are implemented for public pages,
+property/project/blog views, property searches, lead forms, contact forms, and
+WhatsApp/phone/email contact intent clicks.
+
+Configuration details, event mapping, and the GA4 key events to mark are in
+[`docs/analytics-tracking.md`](./docs/analytics-tracking.md).

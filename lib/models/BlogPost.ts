@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 export interface IBlogPost {
   title: string;
@@ -7,7 +7,14 @@ export interface IBlogPost {
   excerpt: string;
   author: string;
   featuredImage: string;
+  /** Alt decrivant l'image (SEO et accessibilite) */
+  featuredImageAlt?: string;
   category: string;
+  /** Audience cible affichee et mentionnee dans les metadonnees */
+  audienceLabel?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
   published: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -21,7 +28,12 @@ const BlogPostSchema = new Schema<IBlogPost>(
     excerpt: { type: String, required: true },
     author: { type: String, required: true },
     featuredImage: { type: String, required: true },
+    featuredImageAlt: { type: String },
     category: { type: String, required: true },
+    audienceLabel: { type: String },
+    metaTitle: { type: String },
+    metaDescription: { type: String },
+    keywords: { type: [String], default: [] },
     published: { type: Boolean, default: false },
   },
   {
@@ -29,7 +41,6 @@ const BlogPostSchema = new Schema<IBlogPost>(
   }
 );
 
-BlogPostSchema.index({ slug: 1 });
 BlogPostSchema.index({ published: 1, createdAt: -1 });
 
 export const BlogPost = models.BlogPost || model<IBlogPost>('BlogPost', BlogPostSchema);

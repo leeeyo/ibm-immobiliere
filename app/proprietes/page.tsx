@@ -1,124 +1,94 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import PropertyCard from '@/components/PropertyCard';
-import SearchBar from '@/components/SearchBar';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import PropertyCard from "@/components/PropertyCard";
+import HeroSearch from "@/components/HeroSearch";
+import SortSelect from "@/components/SortSelect";
+import { searchProperties } from "@/lib/actions/properties";
 
 export const metadata = {
-  title: 'Propriétés - IBM Immobilière',
-  description: 'Découvrez nos propriétés résidentielles et commerciales disponibles',
+  title: "Acheter — Catalogue de biens",
+  description:
+    "Découvrez notre catalogue de biens à la vente : appartements, bureaux, commerces signés IBM Immobilière.",
+  alternates: { canonical: "/proprietes" },
 };
 
-export default async function PropertiesPage() {
-  const properties = [
-    {
-      id: '1',
-      title: 'Appartement moderne S+3',
-      price: 350000,
-      location: 'L\'Aouina, Tunis',
-      type: 'residential' as const,
-      rooms: 4,
-      bathrooms: 2,
-      area: 120,
-      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
-      status: 'available' as const,
-    },
-    {
-      id: '2',
-      title: 'Villa de luxe avec piscine',
-      price: 850000,
-      location: 'Borj Cedria',
-      type: 'residential' as const,
-      rooms: 6,
-      bathrooms: 3,
-      area: 280,
-      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
-      status: 'available' as const,
-    },
-    {
-      id: '3',
-      title: 'Local commercial spacieux',
-      price: 450000,
-      location: 'Centre Ville',
-      type: 'commercial' as const,
-      area: 150,
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800',
-      status: 'reserved' as const,
-    },
-    {
-      id: '4',
-      title: 'Appartement S+2 vue mer',
-      price: 420000,
-      location: 'La Marsa',
-      type: 'residential' as const,
-      rooms: 3,
-      bathrooms: 2,
-      area: 110,
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-      status: 'available' as const,
-    },
-    {
-      id: '5',
-      title: 'Bureau moderne équipé',
-      price: 380000,
-      location: 'Les Berges du Lac',
-      type: 'commercial' as const,
-      area: 135,
-      image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800',
-      status: 'available' as const,
-    },
-    {
-      id: '6',
-      title: 'Villa standing avec jardin',
-      price: 920000,
-      location: 'Sidi Bou Said',
-      type: 'residential' as const,
-      rooms: 7,
-      bathrooms: 4,
-      area: 350,
-      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
-      status: 'sold' as const,
-    },
-  ];
+export default async function PropertiesPage(props: any) {
+  const sp: Record<string, any> = (await props.searchParams) || {};
+
+  const filters = {
+    query: sp.query || undefined,
+    type: sp.type || undefined,
+    rooms: sp.rooms ? parseInt(sp.rooms, 10) : undefined,
+    minPrice: sp.minPrice ? parseInt(sp.minPrice, 10) : undefined,
+    maxPrice: sp.maxPrice ? parseInt(sp.maxPrice, 10) : undefined,
+    sort: sp.sort || undefined,
+    page: sp.page ? parseInt(sp.page, 10) : 1,
+    limit: sp.limit ? parseInt(sp.limit, 10) : 12,
+  };
+
+  const { results, total } = await searchProperties(filters as any);
 
   return (
     <>
       <Header />
-      
+
       <main className="pt-20">
-        <section className="bg-gradient-to-br from-blue-900 to-slate-900 py-16 text-white">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-              Nos Propriétés
+        {/* Hero */}
+        <section className="relative isolate overflow-hidden bg-[var(--color-navy-950)] text-white">
+          {/* Decorative gold glow — purely cosmetic, no layout impact */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-32 right-[-10%] h-[28rem] w-[28rem] rounded-full bg-[var(--color-gold-500)]/20 blur-[120px]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--color-gold-500)]/40 to-transparent"
+          />
+          <div className="container-page relative py-16 lg:py-24">
+            <span className="eyebrow !text-[var(--color-gold-400)] before:!bg-[var(--color-gold-400)]">
+              Catalogue
+            </span>
+            <h1 className="heading-display mt-4 max-w-3xl text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
+              Trouvez le bien qui vous correspond.
             </h1>
-            <p className="text-xl text-center text-white/90 mb-8">
-              Trouvez la propriété idéale parmi notre sélection
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+              Explorez tous les appartements et locaux signés IBM Immobilière,
+              disponibles à la vente. Filtres précis par type, surface, prix et
+              localisation.
             </p>
-            <div className="max-w-5xl mx-auto">
-              <SearchBar />
+            <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-gold-400)]" />
+              <span className="font-semibold text-white">{total}</span>
+              bien{total > 1 ? "s" : ""} disponible{total > 1 ? "s" : ""}
+            </p>
+            <div className="mt-10 max-w-4xl">
+              <HeroSearch />
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
+        {/* Results */}
+        <section className="bg-[var(--color-ivory-50)]">
+          <div className="container-page py-12 lg:py-16">
             <div className="flex items-center justify-between mb-8">
-              <p className="text-slate-600">
-                <span className="font-semibold text-slate-900">{properties.length}</span> propriétés trouvées
+              <p className="text-sm text-[var(--color-stone-600)]">
+                <span className="font-semibold text-[var(--color-navy-900)]">{total}</span>{" "}
+                bien{total > 1 ? "s" : ""} trouvé{total > 1 ? "s" : ""}
               </p>
-              <select className="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option>Plus récentes</option>
-                <option>Prix croissant</option>
-                <option>Prix décroissant</option>
-                <option>Surface croissante</option>
-                <option>Surface décroissante</option>
-              </select>
+              <SortSelect />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {properties.map((property) => (
-                <PropertyCard key={property.id} {...property} />
-              ))}
-            </div>
+            {results.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-[var(--color-stone-300)] bg-white py-20 text-center text-[var(--color-stone-500)]">
+                Aucun bien ne correspond à votre recherche.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {results.map((property: any) => (
+                  <PropertyCard key={property.id} {...property} />
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>

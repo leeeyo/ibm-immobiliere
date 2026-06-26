@@ -1,0 +1,419 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e7]
+          - text: Riadh el Andalous, Ariana
+        - generic [ref=e10]:
+          - img [ref=e11]
+          - text: Lun — Ven · 8h30 — 17h
+      - generic [ref=e14]:
+        - link "+216 98 451 300" [ref=e15] [cursor=pointer]:
+          - /url: tel:+21698451300
+          - img [ref=e16]
+          - text: +216 98 451 300
+        - link "WhatsApp" [ref=e19] [cursor=pointer]:
+          - /url: https://wa.me/21698451300
+        - link "Instagram" [ref=e20] [cursor=pointer]:
+          - /url: https://www.instagram.com/immobiliereibm/
+          - img [ref=e21]
+        - link "Facebook" [ref=e24] [cursor=pointer]:
+          - /url: https://www.facebook.com/ibm.immobiliere
+          - img [ref=e25]
+        - link "LinkedIn" [ref=e27] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/ibm-immobili%C3%A8re/
+          - img [ref=e28]
+    - generic [ref=e33]:
+      - link "IBM Immobilière — Accueil" [ref=e34] [cursor=pointer]:
+        - /url: /
+        - img "IBM Immobilière" [ref=e35]
+      - navigation [ref=e36]:
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - link "Accueil" [ref=e39] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e40]: Accueil
+          - listitem [ref=e42]:
+            - link "Acheter" [ref=e43] [cursor=pointer]:
+              - /url: /proprietes
+              - generic [ref=e44]: Acheter
+          - listitem [ref=e45]:
+            - link "Projets" [ref=e46] [cursor=pointer]:
+              - /url: /projets
+              - generic [ref=e47]: Projets
+              - img [ref=e48]
+          - listitem [ref=e50]:
+            - link "À propos" [ref=e51] [cursor=pointer]:
+              - /url: /a-propos
+              - generic [ref=e52]: À propos
+          - listitem [ref=e53]:
+            - link "Blog" [ref=e54] [cursor=pointer]:
+              - /url: /blog
+              - generic [ref=e55]: Blog
+          - listitem [ref=e56]:
+            - link "Contact" [ref=e57] [cursor=pointer]:
+              - /url: /contact
+              - generic [ref=e58]: Contact
+      - link "Prendre RDV" [ref=e60] [cursor=pointer]:
+        - /url: /contact
+        - text: Prendre RDV
+        - img [ref=e61]
+  - main [ref=e64]:
+    - region "Présentation IBM Immobilière" [ref=e65]:
+      - generic [ref=e71]:
+        - generic [ref=e72]: Bureau ouvert · 8h30 — 17h
+        - generic [ref=e74]:
+          - img [ref=e75]
+          - text: Ariana — Tunisie
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - text: Promoteur · Architecte · Tunis
+          - heading "Bâtir un art de vivre, pas seulement des murs." [level=1] [ref=e81]:
+            - generic [ref=e82]:
+              - text: Bâtir un
+              - emphasis [ref=e83]: art de vivre
+              - text: ","
+            - generic [ref=e85]:
+              - text: pas seulement des murs.
+              - img [ref=e86]
+          - paragraph [ref=e88]: Promoteur immobilier en Tunisie depuis 17 ans. Résidences et espaces commerciaux livrés sans surprise.
+          - generic [ref=e90]:
+            - generic [ref=e91]:
+              - button "Acheter" [ref=e92]
+              - button "Louer" [ref=e93]
+            - generic [ref=e94]:
+              - generic [ref=e95] [cursor=pointer]:
+                - generic [ref=e96]:
+                  - img [ref=e98]
+                  - text: Type de bien
+                - combobox "Type de bien" [ref=e102]:
+                  - option "Tous types" [selected]
+                  - option "Appartement"
+                  - option "Bureau / Commerce"
+              - generic [ref=e103] [cursor=pointer]:
+                - generic [ref=e104]:
+                  - img [ref=e106]
+                  - text: Localisation
+                - combobox "Localisation" [ref=e109]:
+                  - option "Toutes villes" [selected]
+                  - option "Ariana"
+                  - option "Tunis"
+                  - option "Sousse"
+                  - option "Boumhal"
+                  - option "Borj Cedria"
+              - button "Rechercher" [ref=e110]:
+                - img [ref=e111]
+                - text: Rechercher
+          - list [ref=e114]:
+            - listitem [ref=e115]: 17ans d'expertise
+            - listitem [ref=e117]: Livraisons garanties
+            - listitem [ref=e119]: Bureau d'Ariana
+        - complementary [ref=e121]:
+          - link "Aujourd'hui Visite guidée sur RDV Bureau d'Ariana — sans engagement. Réserver un créneau" [ref=e122] [cursor=pointer]:
+            - /url: /contact
+            - generic [ref=e123]: Aujourd'hui
+            - paragraph [ref=e124]: Visite guidée sur RDV
+            - paragraph [ref=e125]: Bureau d'Ariana — sans engagement.
+            - generic [ref=e126]:
+              - text: Réserver un créneau
+              - img [ref=e127]
+      - generic [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]: Ariana
+          - generic [ref=e136]: Tunis
+          - generic [ref=e138]: Sousse
+          - generic [ref=e140]: Boumhal
+          - generic [ref=e142]: Borj Cedria
+          - generic [ref=e144]: Riadh El Andalous
+        - generic [ref=e146]:
+          - generic [ref=e147]: Ariana
+          - generic [ref=e149]: Tunis
+          - generic [ref=e151]: Sousse
+          - generic [ref=e153]: Boumhal
+          - generic [ref=e155]: Borj Cedria
+          - generic [ref=e157]: Riadh El Andalous
+    - generic [ref=e161]:
+      - generic [ref=e163]:
+        - text: Notre conviction
+        - heading "L'immobilier ne se mesure pas en mètres carrés — il se mesure en confiance." [level=2] [ref=e164]:
+          - text: L'immobilier ne se
+          - emphasis [ref=e165]: mesure pas
+          - text: en mètres carrés —
+          - generic [ref=e166]:
+            - text: il se mesure en
+            - generic [ref=e167]:
+              - text: confiance.
+              - img [ref=e168]
+        - paragraph [ref=e170]: Depuis 17ans, nous concevons, construisons et accompagnons. Chaque résidence est un engagement signé — celui d'une famille tunisienne envers les vôtres.
+      - generic [ref=e173]:
+        - img "Résidence IBM Immobilière" [ref=e174]
+        - generic [ref=e177]:
+          - generic [ref=e178]: Photographié à
+          - paragraph [ref=e179]: Ariana — 2024
+    - generic [ref=e182]:
+      - generic [ref=e184]:
+        - text: Projet en vedette
+        - heading "Résidence El Ons" [level=2] [ref=e185]
+        - paragraph [ref=e186]:
+          - img [ref=e187]
+          - text: Boumhel El Bassatine, Tunis
+        - paragraph [ref=e190]: Située à Boumhel El Bassatine, cette résidence offre un emplacement privilégié à proximité des commerces et d’un espace vert
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - generic [ref=e193]: Année
+            - paragraph [ref=e194]: "2015"
+          - generic [ref=e195]:
+            - generic [ref=e196]: Logements
+            - paragraph [ref=e197]: "32"
+        - link "Découvrir le projet" [ref=e198] [cursor=pointer]:
+          - /url: /projets/residence-el-ons
+          - img [ref=e200]
+          - generic [ref=e203]: Découvrir le projet
+      - generic [ref=e206]:
+        - img "Résidence El Ons" [ref=e208]
+        - generic [ref=e210]:
+          - generic [ref=e211]: Caption
+          - paragraph [ref=e212]: « Une lecture contemporaine de la cour méditerranéenne. »
+          - generic [ref=e213]: — Note d'intention, atelier IBM
+        - generic [ref=e215]: P
+    - generic [ref=e217]:
+      - generic [ref=e218]:
+        - generic [ref=e219]:
+          - text: Catalogue
+          - heading "Quelques pièces de notre collection." [level=2] [ref=e220]:
+            - text: Quelques pièces
+            - emphasis [ref=e221]: de notre collection.
+        - link "Tout le catalogue" [ref=e222] [cursor=pointer]:
+          - /url: /proprietes
+          - text: Tout le catalogue
+          - img [ref=e223]
+      - link "Appartement S+3 avec terrasse - Sidi Bou Saïd Pièce maîtresse À découvrir Sidi Bou Saïd, Tunis Appartement S+3 avec terrasse - Sidi Bou Saïd 4 pièces 135 m² 520 000 DT" [ref=e229] [cursor=pointer]:
+        - /url: /proprietes/appartement-s3-sidi-bou-said
+        - img "Appartement S+3 avec terrasse - Sidi Bou Saïd" [ref=e230]
+        - generic [ref=e232]:
+          - generic [ref=e233]: Pièce maîtresse
+          - generic [ref=e234]: À découvrir
+        - generic [ref=e236]:
+          - generic [ref=e237]:
+            - generic [ref=e238]:
+              - img [ref=e239]
+              - text: Sidi Bou Saïd, Tunis
+            - heading "Appartement S+3 avec terrasse - Sidi Bou Saïd" [level=3] [ref=e242]
+            - generic [ref=e243]:
+              - generic [ref=e244]: 4 pièces
+              - generic [ref=e245]: 135 m²
+              - generic [ref=e246]: 520 000 DT
+          - img [ref=e248]
+    - generic [ref=e254]:
+      - text: Paroles de clients
+      - generic [ref=e255]:
+        - generic [ref=e256]:
+          - blockquote [ref=e257]: “Service professionnel et réactif — merci pour la visite et les explications claires sur le bien.”
+          - generic [ref=e258]:
+            - paragraph [ref=e260]: Inès Boussetta
+            - paragraph [ref=e261]: Programme Riadh El Andalous
+        - generic [ref=e262]:
+          - button "Témoignage précédent" [ref=e263]:
+            - img [ref=e264]
+          - tablist "Choisir un témoignage" [ref=e266]:
+            - tab "Témoignage 1 sur 4" [selected] [ref=e267]
+            - tab "Témoignage 2 sur 4" [ref=e268]
+            - tab "Témoignage 3 sur 4" [ref=e269]
+            - tab "Témoignage 4 sur 4" [ref=e270]
+          - button "Témoignage suivant" [ref=e271]:
+            - img [ref=e272]
+    - generic [ref=e275]:
+      - generic [ref=e276]:
+        - text: Le parcours
+        - heading "De la première visite à la remise des clés." [level=2] [ref=e277]:
+          - text: De la première visite
+          - emphasis [ref=e278]: à la remise des clés.
+        - paragraph [ref=e279]: Quatre étapes calmes, transparentes, où chaque détail est documenté et chaque décision vous appartient.
+      - list [ref=e280]:
+        - listitem [ref=e282]:
+          - generic [ref=e283]:
+            - img [ref=e286]
+            - generic [ref=e289]:
+              - heading "Découverte" [level=3] [ref=e290]
+              - paragraph [ref=e291]: Nous écoutons votre projet — usage, surface, quartier — pour cibler les biens qui vous correspondent.
+        - listitem [ref=e292]:
+          - generic [ref=e293]:
+            - img [ref=e296]
+            - generic [ref=e299]:
+              - heading "Sélection" [level=3] [ref=e300]
+              - paragraph [ref=e301]: Visite guidée, étude des plans, conseils sur les finitions et aide au montage du dossier.
+        - listitem [ref=e302]:
+          - generic [ref=e303]:
+            - img [ref=e306]
+            - generic [ref=e309]:
+              - heading "Sécurisation" [level=3] [ref=e310]
+              - paragraph [ref=e311]: Vérifications juridiques, négociation et accompagnement notarial jusqu'à la signature.
+        - listitem [ref=e312]:
+          - generic [ref=e313]:
+            - img [ref=e316]
+            - generic [ref=e319]:
+              - heading "Remise des clés" [level=3] [ref=e320]
+              - paragraph [ref=e321]: Réception du bien, état des lieux, livret d'entretien et suivi après livraison.
+    - generic [ref=e324]:
+      - generic [ref=e325]:
+        - text: En chiffres
+        - heading "Un savoir-faire qui se compte — et se raconte." [level=3] [ref=e326]:
+          - text: Un savoir-faire
+          - text: qui se compte —
+          - emphasis [ref=e327]: et se raconte.
+      - generic [ref=e328]:
+        - text: "0"
+        - paragraph [ref=e329]: Années d'engagement
+      - generic [ref=e330]:
+        - text: "0"
+        - paragraph [ref=e331]: Résidences livrées
+      - generic [ref=e332]:
+        - generic [ref=e333]: 0%
+        - paragraph [ref=e334]: Clients satisfaits
+    - generic [ref=e337]:
+      - generic [ref=e338]:
+        - text: Partenaires
+        - paragraph [ref=e339]:
+          - text: Sélectionnés pour
+          - text: leur exigence.
+      - generic [ref=e342]:
+        - generic [ref=e343]:
+          - img [ref=e345]
+          - img [ref=e347]
+          - img [ref=e349]
+          - img [ref=e351]
+          - img [ref=e353]
+        - generic [ref=e354]:
+          - img [ref=e356]
+          - img [ref=e358]
+          - img [ref=e360]
+          - img [ref=e362]
+          - img [ref=e364]
+    - generic [ref=e368]:
+      - generic [ref=e371]:
+        - generic [ref=e372]:
+          - text: Carte d'invitation
+          - heading "Venez visiter, prendre un café, poser vos questions." [level=2] [ref=e373]:
+            - text: Venez visiter,
+            - emphasis [ref=e374]: prendre un café,
+            - text: poser vos questions.
+          - paragraph [ref=e375]: Notre bureau d'Ariana vous accueille en semaine. Présentation des résidences en cours, plans, finitions — et des conseils sans engagement.
+          - generic [ref=e376]:
+            - link "Réserver une visite" [ref=e377] [cursor=pointer]:
+              - /url: /contact
+              - img [ref=e378]
+              - text: Réserver une visite
+            - link "+216 98 451 300" [ref=e381] [cursor=pointer]:
+              - /url: tel:+21698451300
+              - img [ref=e382]
+              - text: +216 98 451 300
+        - generic [ref=e385]:
+          - generic [ref=e386]:
+            - generic [ref=e387]:
+              - generic [ref=e388]: RSVP
+              - generic [ref=e389]: IBM Immobilière
+            - separator [ref=e390]
+            - generic [ref=e391]:
+              - text: Adresse
+              - paragraph [ref=e392]: Riadh el Andalous, Ariana
+            - generic [ref=e393]:
+              - text: Horaires
+              - paragraph [ref=e394]: 8h30 — 17h
+            - generic [ref=e395]:
+              - text: Email
+              - paragraph [ref=e396]: contact@ibm-immobiliere.tn
+          - generic [ref=e399]:
+            - generic [ref=e400]: IBM
+            - generic [ref=e401]: Est.09
+      - generic [ref=e402]:
+        - generic [ref=e403]:
+          - img [ref=e404]
+          - text: Promoteur · Architecte
+        - generic [ref=e408]: Immobilière Ben Mokhtar
+        - generic [ref=e409]: www.ibm-immobiliere.tn
+  - contentinfo [ref=e410]:
+    - generic [ref=e413]:
+      - generic [ref=e414]:
+        - img "IBM Immobilière" [ref=e415]
+        - paragraph [ref=e416]:
+          - generic [ref=e417]: 17 ans d'engagement
+          - text: au service de la qualité. Promoteur immobilier expert, nous réalisons des projets d'exception pour bâtir votre avenir en toute confiance.
+        - generic [ref=e418]:
+          - link "Facebook" [ref=e419] [cursor=pointer]:
+            - /url: https://www.facebook.com/ibm.immobiliere
+            - img [ref=e420]
+          - link "Instagram" [ref=e422] [cursor=pointer]:
+            - /url: https://www.instagram.com/immobiliereibm/
+            - img [ref=e423]
+          - link "LinkedIn" [ref=e426] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/ibm-immobili%C3%A8re/
+            - img [ref=e427]
+      - generic [ref=e431]:
+        - heading "Accès rapide" [level=3] [ref=e432]
+        - list [ref=e433]:
+          - listitem [ref=e434]:
+            - link "Accueil" [ref=e435] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e436]:
+            - link "Acheter" [ref=e437] [cursor=pointer]:
+              - /url: /proprietes
+          - listitem [ref=e438]:
+            - link "Nos Projets" [ref=e439] [cursor=pointer]:
+              - /url: /projets
+          - listitem [ref=e440]:
+            - link "Actualités" [ref=e441] [cursor=pointer]:
+              - /url: /blog
+          - listitem [ref=e442]:
+            - link "Contact" [ref=e443] [cursor=pointer]:
+              - /url: /contact
+      - generic [ref=e444]:
+        - heading "Recherches populaires" [level=3] [ref=e445]
+        - list [ref=e446]:
+          - listitem [ref=e447]:
+            - link "Appartements à Tunis" [ref=e448] [cursor=pointer]:
+              - /url: /proprietes?location=tunis
+          - listitem [ref=e449]:
+            - link "Vente à Sousse" [ref=e450] [cursor=pointer]:
+              - /url: /proprietes?location=sousse
+          - listitem [ref=e451]:
+            - link "Projets à l'Ariana" [ref=e452] [cursor=pointer]:
+              - /url: /proprietes?location=ariana
+          - listitem [ref=e453]:
+            - link "Appartements S+1" [ref=e454] [cursor=pointer]:
+              - /url: /proprietes?rooms=2
+          - listitem [ref=e455]:
+            - link "Appartements S+2" [ref=e456] [cursor=pointer]:
+              - /url: /proprietes?rooms=3
+          - listitem [ref=e457]:
+            - link "Bureaux & Commerces" [ref=e458] [cursor=pointer]:
+              - /url: /proprietes?type=commercial
+      - generic [ref=e459]:
+        - heading "Coordonnées" [level=3] [ref=e460]
+        - list [ref=e461]:
+          - listitem [ref=e462]:
+            - img [ref=e463]
+            - generic [ref=e466]: Riadh el Andalous, Ariana
+          - listitem [ref=e467]:
+            - link "+216 98 451 300" [ref=e468] [cursor=pointer]:
+              - /url: tel:+21698451300
+              - img [ref=e469]
+              - text: +216 98 451 300
+          - listitem [ref=e471]:
+            - link "contact@ibm-immobiliere.tn" [ref=e472] [cursor=pointer]:
+              - /url: mailto:contact@ibm-immobiliere.tn
+              - img [ref=e473]
+              - text: contact@ibm-immobiliere.tn
+          - listitem [ref=e476]:
+            - img [ref=e477]
+            - generic [ref=e480]: 8h30 — 17h
+    - generic [ref=e482]:
+      - paragraph [ref=e483]: © 2026 IBM Immobilière. Tous droits réservés.
+      - generic [ref=e484]:
+        - link "Mentions légales" [ref=e485] [cursor=pointer]:
+          - /url: /mentions-legales
+        - link "Politique de confidentialité (RGPD)" [ref=e486] [cursor=pointer]:
+          - /url: /politique-confidentialite
+  - button "Open Next.js Dev Tools" [ref=e492] [cursor=pointer]:
+    - img [ref=e493]
+  - alert [ref=e496]

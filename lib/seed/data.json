@@ -1,0 +1,647 @@
+{
+  "projects": [
+    {
+      "name": "Résidence Amira",
+      "slug": "residence-amira",
+      "description": "Résidence contemporaine à Boumhel pensée pour les familles et les investisseurs : confort, praticité et emplacement stratégique. À 10 minutes d'Azur City, double accès autoroute vers Tunis, à proximité d'un centre médical, d'écoles et de commerces. Appartements aux finitions modernes, espaces optimisés et parties communes soignées.",
+      "location": "Boumhel, Ben Arous",
+      "yearCompleted": 2024,
+      "status": "ongoing",
+      "images": [
+        "/uploads/projects/68e0b0d1d41b7b77d143a334/mq6mmuq9-22599b.webp"
+      ],
+      "propertiesCount": 33,
+      "type": "residential",
+      "featured": true,
+      "createdAt": "2025-10-04T00:39:19.703Z",
+      "features": [
+        "Résidence sécurisée",
+        "Ascenseur",
+        "Parking",
+        "Proche Azur City",
+        "Double accès autoroute",
+        "Écoles & commerces à proximité"
+      ],
+      "units": [
+        {
+          "numero": "A 1-1",
+          "etage": "1",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 62.87,
+          "planUrl": "/plans/residence-amira/A1-1.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "A 1-3",
+          "etage": "1",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 74.1,
+          "planUrl": "/plans/residence-amira/A1-3.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "A 1-4",
+          "etage": "1",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 74.7,
+          "planUrl": "/plans/residence-amira/A1-4.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "A 1-5",
+          "etage": "1",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 78.19,
+          "planUrl": "/plans/residence-amira/A1-5.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 1-7",
+          "etage": "1",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 75.09,
+          "planUrl": "/plans/residence-amira/A1-7.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 2-1",
+          "etage": "2",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 62.87,
+          "planUrl": "/plans/residence-amira/A2-1.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 2-3",
+          "etage": "2",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 74.1,
+          "planUrl": "/plans/residence-amira/A2-3.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 2-4",
+          "etage": "2",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 74.7,
+          "planUrl": "/plans/residence-amira/A2-4.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 2-5",
+          "etage": "2",
+          "type": "S+1",
+          "pieces": 2,
+          "surface": 78.19,
+          "planUrl": "/plans/residence-amira/A2-5.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 1-2",
+          "etage": "1",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 110.1,
+          "planUrl": "/plans/residence-amira/A1-2.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 1-6",
+          "etage": "1",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 125.89,
+          "planUrl": "/plans/residence-amira/A1-6.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 2-2",
+          "etage": "2",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 110.1,
+          "planUrl": "/plans/residence-amira/A2-2.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 2-6",
+          "etage": "2",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 125.89,
+          "planUrl": "/plans/residence-amira/A2-6.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 3-2",
+          "etage": "3",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 96.27,
+          "planUrl": "/plans/residence-amira/A3-2.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 3-6",
+          "etage": "3",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 125.89,
+          "planUrl": "/plans/residence-amira/A3-6.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 4-2",
+          "etage": "4",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 82.75,
+          "planUrl": "/plans/residence-amira/A4-2.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "A 4-6",
+          "etage": "4",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 120.38,
+          "planUrl": "/plans/residence-amira/A4-6.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "B 0-3",
+          "etage": "RDC",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 119.38,
+          "planUrl": "/plans/residence-amira/B0-3.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "B 1-1",
+          "etage": "1",
+          "type": "S+2",
+          "pieces": 3,
+          "surface": 123.31,
+          "planUrl": "/plans/residence-amira/B1-1.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "C 0-1",
+          "etage": "RDC",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.29,
+          "planUrl": "/plans/residence-amira/C0-1.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "C 0-2",
+          "etage": "RDC",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.69,
+          "planUrl": "/plans/residence-amira/C0-2.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "C 0-3",
+          "etage": "RDC",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 153.17,
+          "planUrl": "/plans/residence-amira/C0-3.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "C 1-1",
+          "etage": "1",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.17,
+          "planUrl": "/plans/residence-amira/C1-1.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "C 1-2",
+          "etage": "1",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.69,
+          "planUrl": "/plans/residence-amira/C1-2.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "C 1-3",
+          "etage": "1",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 153.17,
+          "planUrl": "/plans/residence-amira/C1-3.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "C 2-1",
+          "etage": "2",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.17,
+          "planUrl": "/plans/residence-amira/C2-1.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "C 2-2",
+          "etage": "2",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.69,
+          "planUrl": "/plans/residence-amira/C2-2.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "C 4-1",
+          "etage": "4",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 132.85,
+          "planUrl": "/plans/residence-amira/C4-1.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "C 4-2",
+          "etage": "4",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 124.64,
+          "planUrl": "/plans/residence-amira/C4-2.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "C 4-3",
+          "etage": "4",
+          "surface": 151.87,
+          "planUrl": "/plans/residence-amira/C4-3.pdf",
+          "status": "available"
+        },
+        {
+          "numero": "D 0-4",
+          "etage": "RDC",
+          "type": "S+3",
+          "pieces": 4,
+          "surface": 146.12,
+          "planUrl": "/plans/residence-amira/D0-4.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "D 1-4",
+          "etage": "1",
+          "surface": 146.12,
+          "planUrl": "/plans/residence-amira/D1-4.pdf",
+          "status": "sold"
+        },
+        {
+          "numero": "D 3-4",
+          "etage": "3",
+          "surface": 128.92,
+          "planUrl": "/plans/residence-amira/D3-4.pdf",
+          "status": "available"
+        }
+      ]
+    },
+    {
+      "name": "Résidence El Khalil",
+      "slug": "residence-el-khalil",
+      "description": "En 2011, **IBM** a concrétisé un projet immobilier remarquable : la Résidence El Khalil, située au cœur de l’Aouina. Composée de 8 appartements luxueux, spacieux et lumineux, cette résidence se distingue par son emplacement privilégié, à proximité des commerces et d’un espace vert. \\n **Types d’appartements proposés :**\\n3 unités S+2\\n5 unités S+3\\n\\n**Caractéristiques techniques et commodités :** \\n\\n Isolation thermique et phonique \\nMurs extérieurs en double cloison.\\nIsolation intégrée dans les planchers.\\n\\n**Revêtements de luxe :**\\nSols et murs habillés de marbre et grès cérame haut de gamme.\\n\\n**Menuiseries de qualité :**\\nMenuiserie intérieure en bois noble.\\nMenuiserie extérieure en aluminium avec stores en PVC.\\nPorte d’entrée blindée en bois massif.\\nFenêtres en double vitrage.\\n\\n**Cuisine et commodités :**\\nCuisine agencée et équipée.\\nPlacards aménagés.\\nRobinetterie de luxe.\\n\\n**Confort thermique et climatique :**\\nChauffage central inclus.\\nClimatisation individuelle pour le salon et la chambre parentale, avec pré-installation dans les autres pièces.\\n\\n**Sécurité et stationnement :**\\nParkings disponibles au sous-sol.\\nContrôle d’accès sécurisé par code.\\n\\nLa Résidence El Khalil incarne l’engagement de **IBM** pour l’excellence en ingénierie et en construction, offrant à ses résidents un cadre de vie exceptionnel alliant confort, modernité et sécurité.",
+      "location": "l’Aouina",
+      "yearCompleted": 2011,
+      "status": "completed",
+      "images": [
+        "/projects/projet5.jpg"
+      ],
+      "propertiesCount": 8,
+      "type": "residential",
+      "featured": false,
+      "createdAt": "2025-10-04T00:39:19.703Z",
+      "features": []
+    },
+    {
+      "name": "Résidence El Ons",
+      "slug": "residence-el-ons",
+      "description": "Située à Boumhel El Bassatine, cette résidence offre un emplacement privilégié à proximité des commerces et d’un espace vert",
+      "location": "Boumhel El Bassatine, Tunis",
+      "yearCompleted": 2015,
+      "status": "completed",
+      "images": [
+        "/projects/projet2.jpg"
+      ],
+      "propertiesCount": 32,
+      "type": "residential",
+      "featured": false,
+      "createdAt": "2025-10-04T00:39:19.703Z",
+      "features": []
+    },
+    {
+      "name": "Résidence Ennakhil",
+      "slug": "residence-ennakhil",
+      "description": "Réalisée en 2013, la Résidence Ennakhil, située dans le quartier des Jardins de L’Aouina, offre un cadre de vie paisible et agréable grâce à son emplacement stratégique à proximité des commerces et d’un espace vert. Ce projet se compose de 10 appartements luxueux, spacieux et lumineux, conçus pour répondre aux attentes des résidents en matière de confort et de sérénité. Il incarne l’expertise et le savoir-faire d’IBM Immobilière.\n\n**Types d’appartements proposés :**\n1 unité S+4\n4 unités S+3\n4 unités S+2\n1 Duplex S+2\n\n**Caractéristiques techniques et commodités :**\nIsolation thermique et phonique (double cloison, isolation dans les planchers)\nRevêtements de sol et murs en marbre et grès cérame haut de gamme.\nMenuiserie intérieure en bois noble.\nMenuiserie extérieure en aluminium avec stores en PVC.\nPorte d’entrée blindée en bois massif.\nFenêtres en double vitrage.\nCuisine entièrement agencée et équipée.\nRobinetterie de luxe et placards aménagés.\nChauffage central.\nClimatisation individuelle dans le salon et la chambre parentale (pré-installation dans les autres pièces).\nAscenseur moderne.\nCelliers.\nContrôle d’accès sécurisé par code.",
+      "location": "Jardins de L’Aouina",
+      "yearCompleted": 2013,
+      "status": "completed",
+      "images": [
+        "/projects/projet1.jpg"
+      ],
+      "propertiesCount": 10,
+      "type": "residential",
+      "featured": false,
+      "createdAt": "2025-10-04T00:39:19.703Z",
+      "features": []
+    },
+    {
+      "name": "Résidence La Tulipe",
+      "slug": "residence-la-tulipe",
+      "description": "Réalisée en 2021, la Résidence La Tulipe (R+2) se situe dans un quartier résidentiel calme et chic de Borj Cedria, entourée de villas et à proximité des commodités. Elle comprend des appartements spacieux et lumineux, des locaux commerciaux, ainsi que des espaces extérieurs soignés avec des jardins et patios ornés de plantes tropicales. Ce projet reflète l’engagement d’IBM Immobilière à fournir des résidences de qualité.\n\n**Types d'unités et surfaces :**\n- S+1 : 49 m².\n- S+2 : 110 à 116 m².\n- S+3 : 131 à 143 m².\n- Locaux commerciaux : 51 à 146 m².\n\n**Caractéristiques de haut standing :**\n- Revêtements de sol en marbre Thala et grès dans la masse (cuisines).\n- Menuiserie intérieure en bois noble et extérieure en aluminium avec double vitrage.\n- Portes d’entrée blindées en bois massif.\n- Climatisation (split système) et chauffage central (radiateurs en aluminium).\n- Isolation phonique et thermique.\n- Jardins privatifs pour les appartements en rez-de-chaussée.\n\n**Sécurité et commodités :**\n- Caméras de surveillance pour une sécurité renforcée.\n- Trois accès à la résidence.\n- Terrasses offrant une vue dégagée sur le quartier.\n",
+      "location": "Borj Cedria",
+      "yearCompleted": 2021,
+      "status": "completed",
+      "images": [
+        "/projects/projet4.jpg"
+      ],
+      "propertiesCount": 32,
+      "type": "residential and commercial",
+      "featured": false,
+      "createdAt": "2025-10-04T00:39:19.703Z"
+    }
+  ],
+  "properties": [
+    {
+      "slug": "appartement-residence-amira-boumhal",
+      "area": 110,
+      "bathrooms": 2,
+      "createdAt": "2026-06-06T14:33:17.138Z",
+      "description": "Bel appartement S+2 livré au sein de la Résidence Amira à Boumhel. Séjour lumineux, cuisine équipée, finitions soignées et orientation traversante. Résidence sécurisée avec ascenseur et parking.",
+      "featured": true,
+      "features": [
+        "Résidence sécurisée",
+        "Ascenseur",
+        "Parking",
+        "Cuisine équipée",
+        "Climatisation"
+      ],
+      "floor": "1",
+      "images": [
+        "/apartement-boumhal-residence-amira/DSC_9613-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9541-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9531-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9544-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9547-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9550-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9555-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9562-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9568-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9574-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9577-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9583-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9596-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9609-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9616-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9622-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9625-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9628-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9631-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9634-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9640-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9646-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9649-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9655-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9658-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9661-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9664-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9667-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9670-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9673-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9676-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9679-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9685-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9688-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9691-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9694-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9697-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9703-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9709-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9712-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9716-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9721-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9724-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9730-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9742-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9745-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9751-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9757-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9767-HDR.jpg",
+        "/apartement-boumhal-residence-amira/DSC_9816-HDR.jpg"
+      ],
+      "location": "Boumhel, Ben Arous",
+      "orientation": "Sud-Est",
+      "price": 295000,
+      "reference": "IBM-AMIRA-A101",
+      "rooms": 3,
+      "status": "available",
+      "title": "Appartement S+2 — Résidence Amira, Boumhal",
+      "type": "residential",
+      "videos": [
+        "https://youtu.be/ST90gVciEl4"
+      ],
+      "planUrl": "/uploads/properties/6a242fade426b01ec97138a3/plan-mq6mr3o8-f2258f.pdf"
+    },
+    {
+      "slug": "local-commercial-tunis-centre",
+      "area": 75,
+      "bathrooms": 1,
+      "createdAt": "2026-06-06T14:43:30.250Z",
+      "description": "Local idéal pour commerce ou bureau en plein centre-ville.",
+      "featured": false,
+      "features": [
+        "Vitrine sur rue",
+        "Électricité conforme"
+      ],
+      "images": [
+        "/hero/office-lobby.jpg"
+      ],
+      "location": "Avenue Habib Bourguiba, Tunis",
+      "price": 220000,
+      "reference": "IBM-COM-TC07",
+      "rooms": 0,
+      "status": "available",
+      "title": "Local commercial - Rue Charles de Gaulle, Tunis",
+      "type": "commercial"
+    }
+  ],
+  "blogposts": [
+    {
+      "title": "Acheter un logement en Tunisie depuis l'étranger : diaspora et expatriés",
+      "slug": "acheter-depuis-etranger-tunisie-diaspora",
+      "metaTitle": "Acheter en Tunisie depuis l'étranger — diaspora | IBM Immobilière",
+      "metaDescription": "Conseils pratiques pour la diaspora tunisienne et les expatriés : mandat, visites à distance, paiement et reprise d'information fiable sur le promoteur.",
+      "excerpt": "Pour les Tunisiens à l'étranger qui envisagent un pied-à-terre ou un investissement : une approche prudente, avec des interlocuteurs de confiance sur place.",
+      "author": "IBM Immobilière",
+      "audienceLabel": "Diaspora & expatriés",
+      "category": "Acheter",
+      "featuredImage": "/blogs/sidi-bou-said.jpg",
+      "featuredImageAlt": "Vue méditerranéenne et architecture blanche, type village côtier tunisien",
+      "keywords": [
+        "acheter immobilier Tunisie depuis France",
+        "diaspora tunisienne immobilier",
+        "investir en Tunisie à distance"
+      ],
+      "published": true,
+      "content": "<p>La distance impose une organisation différente, mais nombre de projets se concluent sereinement lorsque la transparence et les intermédiaires sont bien choisis.</p>\n<h2>Mandat et représentation</h2>\n<p>Selon votre situation, un mandat ou un accompagnement juridique peut sécuriser les signatures. Renseignez-vous sur les modalités en vigueur au moment de votre dossier.</p>\n<h2>Visites et preuves matérielles</h2>\n<ul>\n<li>Visite vidéo guidée ou rapport photo daté</li>\n<li>Plans, descriptifs techniques et liste des finitions</li>\n<li>Historique du promoteur et chantiers visitables</li>\n</ul>\n<h2>Paiement et calendrier</h2>\n<p>Anticipez les délais bancaires internationaux et les variations de change. Un échéancier écrit limite les zones d'ombre entre acompte et livraison.</p>",
+      "createdAt": "2026-02-18T09:00:00.000Z"
+    },
+    {
+      "title": "Acheter dans le neuf à Tunis et en banlieue nord : repères pour bien choisir",
+      "slug": "acheter-neuf-tunis-reperes",
+      "metaTitle": "Acheter un appartement neuf à Tunis 2026 : repères | IBM Immobilière",
+      "metaDescription": "Acheter dans le neuf en Tunisie : choisir le bon promoteur, lire l'avancement des travaux et l'emplacement, et sécuriser son acquisition à Tunis et Ariana.",
+      "excerpt": "Une grille de lecture simple pour acheter dans le neuf en Tunisie : sérieux du promoteur, qualité de l'emplacement et finitions, avec un focus sur Tunis, Ariana et le littoral.",
+      "author": "IBM Immobilière",
+      "audienceLabel": "Acheteurs et primo-accédants",
+      "category": "Marché & achat",
+      "featuredImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&auto=format&fit=crop",
+      "featuredImageAlt": "Immeubles urbains modernes, vus en contre-plongée — illustration marché du neuf",
+      "keywords": [
+        "acheter appartement neuf Tunisie",
+        "immobilier neuf Ariana",
+        "promoteur immobilier Tunis",
+        "achat sur plan VEFA"
+      ],
+      "published": true,
+      "content": "<p>En Tunisie, le neuf est porté par quelques promoteurs sérieux qui maîtrisent la qualité de construction, les délais et la conformité administrative. Pour un acheteur, c'est souvent le meilleur compromis entre confort, garanties et valeur dans le temps.</p>\n<h2>Ce que regardent les acheteurs en 2026</h2>\n<p>Que vous achetiez votre résidence principale ou un bien patrimonial, la lisibilité du promoteur, l'avancement des travaux et la qualité de l'emplacement priment souvent sur quelques mètres carrés de différence.</p>\n<ul>\n<li>Visibilité transport et accès (Tunis, La Marsa, Ariana, Ennasr)</li>\n<li>Résidence sécurisée, finitions soignées et charges maîtrisées</li>\n<li>Documentation claire (titre foncier, état civil des parties)</li>\n</ul>\n<h2>Acheter sur plan : rester attentif aux engagements</h2>\n<p>Lors d'un achat sur plan (VEFA), exigez un descriptif détaillé des prestations et un calendrier de livraison réaliste. Nous vous recommandons de visiter des réalisations livrées par le même promoteur pour juger la qualité réelle.</p>\n<p><em>Article d'information générale ; chaque situation financière et fiscale doit être validée avec un professionnel.</em></p>",
+      "createdAt": "2026-01-12T09:00:00.000Z"
+    },
+    {
+      "title": "Local commercial à Tunis : emplacement, budget de reprise et signalétique",
+      "slug": "local-commercial-tunis-emplacement",
+      "metaTitle": "Local commercial Tunis — emplacement et acquisition | IBM Immobilière",
+      "metaDescription": "Points de vigilance pour commerçants et indépendants : affluence, vitrine, normes, charges et budget d'acquisition dans le Grand Tunis.",
+      "excerpt": "Un résumé utile pour les entrepreneurs qui comparent plusieurs emplacements commerciaux en Tunisie.",
+      "author": "IBM Immobilière",
+      "audienceLabel": "Commerçants & indépendants",
+      "category": "Commerce & bureau",
+      "featuredImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&q=80&auto=format&fit=crop",
+      "featuredImageAlt": "Open space et vitrine type bureau ou commerce moderne",
+      "keywords": [
+        "local commercial Tunis",
+        "boutique Tunis centre",
+        "achat local commercial Ariana",
+        "immobilier professionnel Tunisie"
+      ],
+      "published": true,
+      "content": "<p>Le bon local est rarement seulement une question de prix au mètre carré : la forme de passage, la lisibilité depuis la rue et la charge copropriété peuvent transformer un investissement.</p>\n<h2>Affluence réelle vs. \"zone connue\"</h2>\n<p>Observez les flux à différents horaires : matin, fin de journée, week-end selon le type d'activité. Une rue calme peut exceller pour certains services et être trop faible pour d'autres.</p>\n<h2>Check-list technique rapide</h2>\n<ul>\n<li>Vitrine, hauteur sous plafond, possibilité d'enseigne</li>\n<li>Charges : climatisation, nettoyage parties communes, sécurité</li>\n<li>Alimentations électriques suffisantes pour votre métier</li>\n</ul>\n<h2>Budget et prévisionnel</h2>\n<p>Montez un prévisionnel sur douze mois incluant charges, aménagement léger et permis nécessaires avant de vous engager.</p>",
+      "createdAt": "2026-03-05T09:00:00.000Z"
+    },
+    {
+      "title": "Primo-accédant en Tunisie : étapes, budget et financement (mémo)",
+      "slug": "primo-accedant-tunisie-etapes-financement",
+      "metaTitle": "Primo-accédant Tunisie : étapes d'achat et financement | IBM Immobilière",
+      "metaDescription": "Mémo pour primo-accédants : constitution du dossier, apport, estimation du budget et calendrier type entre réservation et acte, dans un contexte tunisien.",
+      "excerpt": "Un guide de structure — sans jargon inutile — pour préparer un premier achat en Tunisie : budget, banque, visite et signature.",
+      "author": "IBM Immobilière",
+      "audienceLabel": "Primo-accédants",
+      "category": "Acheter",
+      "featuredImage": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&q=80&auto=format&fit=crop",
+      "featuredImageAlt": "Intérieur d'appartement lumineux avec canapé — primo-accédant",
+      "keywords": [
+        "primo-accédant Tunisie",
+        "crédit immobilier Tunisie",
+        "acheter appartement Tunis",
+        "banque habitat Tunisie"
+      ],
+      "published": true,
+      "content": "<p>Avancer pas à pas : c'est la meilleure manière d'éviter les mauvaises surprises quand on achète pour la première fois en Tunisie.</p>\n<h2>1. Cadrer le budget avant de visiter</h2>\n<p>Listez l'apport possible, le coût du notaire et des travaux légers, et une margelle pour l'équipement. Un cadre chiffré évite de tomber amoureux d'un bien hors enveloppe.</p>\n<h2>2. Constituer un dossier lisible</h2>\n<ul>\n<li>Pièces d'identité à jour, fiches de paie ou justificatifs de revenus</li>\n<li>RIB et historique de comportement bancaire lorsque demandé</li>\n<li>Synthèse des charges (crédits en cours, charges fixes)</li>\n</ul>\n<h2>3. Visites : ce qu'il faut noter</h2>\n<p>Orientation, isolation phonique approximative, état des parties communes, pression d'eau, place de parking : quelques critères simples aident à comparer deux programmes équivalents.</p>\n<h2>4. Signature et calendrier</h2>\n<p>Entre promesse de vente ou réservation selon les cas, puis acte définitif, les délais varient. L'important est que chaque engagement soit expliqué clairement avant signature.</p>",
+      "createdAt": "2026-02-03T09:00:00.000Z"
+    },
+    {
+      "title": "Choisir un quartier familial près de Tunis : écoles, services et cadre de vie",
+      "slug": "quartier-familial-tunis-ecoles-services",
+      "metaTitle": "Quartier familial Tunis & banlieue nord — écoles et services",
+      "metaDescription": "Critères concrets pour les familles : proximité scolaire, santé, déplacements et sécurité perçue autour de Tunis, La Marsa, Carthage et Ariana.",
+      "excerpt": "Une grille de décision pour familles qui déménagent dans le Grand Tunis : priorités au quotidien sans oublier le temps de trajet.",
+      "author": "IBM Immobilière",
+      "audienceLabel": "Familles",
+      "category": "Vivre",
+      "featuredImage": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80&auto=format&fit=crop",
+      "featuredImageAlt": "Maison avec jardin et allée — cadre résidentiel familial",
+      "keywords": [
+        "famille Ariana immobilier",
+        "école internationale Tunis",
+        "quartier calme Tunis",
+        "maisons neuves banlieue nord"
+      ],
+      "published": true,
+      "content": "<p>Changer de quartier avec des enfants, c'est composer entre trajets école-travail, espaces verts modestes mais utiles, et une vie de quartier supportable au quotidien.</p>\n<h2>Écoles et activités</h2>\n<p>Vérifiez les temps de trajet réels aux heures de pointe, pas seulement sur carte. La proximité d'activités sportives ou culturelles aide souvent au rythme familial.</p>\n<h2>Santé et courses</h2>\n<ul>\n<li>Cliniques ou cabinets pédiatriques accessibles</li>\n<li>Commerces de proximité et marchés</li>\n<li>Coût et disponibilité du stationnement pour la famille</li>\n</ul>\n<h2>Cadre et tranquillité</h2>\n<p>Le rapport bruit / exposition au soleil / orientation peut peser plus que quelques mètres carrés. Visitez un mardi matin et un vendredi soir si possible.</p>",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "clientName": "Fatma Trabelsi",
+      "content": "Accompagnement sérieux pour l'achat de notre appartement. Nous nous sommes sentis en confiance du premier rendez-vous jusqu'à la signature.",
+      "rating": 5,
+      "featured": true,
+      "projectReference": "Résidence Amira",
+      "createdAt": "2026-06-06T14:43:30.235Z"
+    },
+    {
+      "clientName": "Inès Boussetta",
+      "content": "Service professionnel et réactif — merci pour la visite et les explications claires sur le bien.",
+      "rating": 5,
+      "featured": true,
+      "projectReference": "Programme Riadh El Andalous",
+      "createdAt": "2026-06-06T14:43:30.235Z"
+    },
+    {
+      "clientName": "Selim Nasraoui",
+      "content": "Équipe à l'écoute, dossier juridique bien expliqué. Une expérience sereine pour un premier achat.",
+      "rating": 5,
+      "featured": true,
+      "projectReference": "Immeuble Borj Cedria",
+      "createdAt": "2026-06-06T14:43:30.235Z"
+    },
+    {
+      "clientName": "Youssef Mhiri",
+      "content": "Bonne communication, délais respectés et suivi après la signature. Je recommande.",
+      "rating": 4,
+      "featured": true,
+      "projectReference": "Villa Boumhal",
+      "createdAt": "2026-06-06T14:43:30.235Z"
+    }
+  ],
+  "partners": [
+    {
+      "name": "Agence Architecture Carthage",
+      "website": "https://example-archi.tn",
+      "logo": "",
+      "createdAt": "2025-10-04T00:39:19.713Z"
+    },
+    {
+      "name": "Banque Tunisienne de Développement",
+      "website": "https://example-bank.tn",
+      "logo": "",
+      "createdAt": "2025-10-04T00:39:19.713Z"
+    },
+    {
+      "name": "Cabinet Notarial Leïla & Associés",
+      "website": "https://example-notaire.tn",
+      "logo": "",
+      "createdAt": "2025-10-04T00:39:19.713Z"
+    }
+  ]
+}

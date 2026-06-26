@@ -1,96 +1,89 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
+import { MapPin, ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils/cn";
 
 interface ProjectCardProps {
-  slug: string;
+  id: string;
+  slug?: string;
   name: string;
-  description: string;
-  location: string;
-  yearCompleted: number;
-  status: 'ongoing' | 'completed';
-  image: string;
-  propertiesCount: number;
-  type: 'residential' | 'commercial';
+  description?: string;
+  location?: string;
+  yearCompleted?: number;
+  status?: "planned" | "ongoing" | "completed";
+  images?: string[];
+  propertiesCount?: number;
+  type?: "residential" | "commercial";
 }
 
+const STATUS_META: Record<
+  NonNullable<ProjectCardProps["status"]>,
+  { label: string; cls: string }
+> = {
+  planned: { label: "À venir", cls: "chip" },
+  ongoing: { label: "En cours", cls: "chip-gold" },
+  completed: { label: "Livré", cls: "chip-success" },
+};
+
 export default function ProjectCard({
+  id,
   slug,
   name,
   description,
   location,
   yearCompleted,
-  status,
-  image,
-  propertiesCount,
-  type,
+  status = "completed",
+  images,
+  propertiesCount = 0,
 }: ProjectCardProps) {
+  const cover = (images && images[0]) || "/placeholder.svg";
+  const meta = STATUS_META[status];
+  const href = `/projets/${slug || id}`;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow"
+    <Link
+      href={href}
+      className="group relative flex flex-col overflow-hidden rounded-2xl bg-[var(--color-navy-900)] text-white ring-1 ring-[var(--color-navy-900)] transition-all duration-300 hover:ring-[var(--color-gold-500)] hover:shadow-[0_24px_60px_-15px_rgba(11,23,51,0.45)]"
     >
-      <div className="relative h-80 overflow-hidden group">
+      <div className="relative aspect-[4/3] overflow-hidden">
         <Image
-          src={image}
+          src={cover}
           alt={name}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-        
-        <div className="absolute top-4 right-4 flex flex-col gap-2">
-          <span className={`${status === 'completed' ? 'bg-green-500' : 'bg-blue-500'} text-white px-3 py-1 rounded-full text-sm font-medium`}>
-            {status === 'completed' ? 'Terminé' : 'En cours'}
-          </span>
-          <span className="bg-white/90 backdrop-blur-sm text-slate-900 px-3 py-1 rounded-full text-sm font-medium capitalize">
-            {type === 'residential' ? 'Résidentiel' : 'Commercial'}
-          </span>
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy-950)] via-[var(--color-navy-950)]/30 to-transparent" />
+        <div className="absolute top-4 left-4">
+          <span className={cn("chip", meta.cls)}>{meta.label}</span>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-          <h3 className="text-2xl font-bold mb-2">{name}</h3>
-          <p className="text-white/90 text-sm flex items-center mb-2">
-            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            {location}
-          </p>
-          <p className="text-white/80 text-sm">Année: {yearCompleted}</p>
+        <div className="absolute inset-x-0 bottom-0 p-5">
+          {location ? (
+            <div className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-[var(--color-gold-400)]">
+              <MapPin className="h-3.5 w-3.5" />
+              <span>{location}</span>
+            </div>
+          ) : null}
+          <h3 className="mt-1.5 font-display text-2xl text-white line-clamp-1">
+            {name}
+          </h3>
         </div>
       </div>
 
-      <div className="p-6">
-        <p className="text-slate-600 mb-4 line-clamp-2">
-          {description}
-        </p>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center text-slate-600">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
-            <span className="font-semibold">{propertiesCount}</span>
-            <span className="ml-1">propriétés</span>
-          </div>
-
-          <Link
-            href={`/projets/${slug}`}
-            className="flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors"
-          >
-            Voir
-            <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+      <div className="flex items-center justify-between gap-4 px-5 py-4 bg-[var(--color-navy-900)]">
+        <div className="flex items-center gap-4 text-xs text-white/70">
+          {yearCompleted ? <span>Année {yearCompleted}</span> : null}
+          {propertiesCount ? <span>{propertiesCount} logements</span> : null}
         </div>
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-all group-hover:bg-[var(--color-gold-500)] group-hover:text-[var(--color-navy-900)]">
+          <ArrowUpRight className="h-4 w-4" />
+        </span>
       </div>
-    </motion.div>
+
+      {description ? (
+        <span className="sr-only">{description}</span>
+      ) : null}
+    </Link>
   );
 }

@@ -1,93 +1,141 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import PropertyCard from '@/components/PropertyCard';
-import Image from 'next/image';
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+import JsonLd from "@/components/JsonLd"
+import MetaViewContentTracker from "@/components/MetaViewContentTracker"
+import PropertyCard from "@/components/PropertyCard"
+import UnitsTable from "@/components/UnitsTable"
+import Image from "next/image"
+import { getProjectBySlug, getProjectProperties } from "@/lib/actions/projects"
+import { notFound } from "next/navigation"
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeSanitize from 'rehype-sanitize'
+import { SITE } from "@/lib/constants/site"
 
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const project = {
-    slug: params.slug,
-    name: 'Résidence Ennakhil',
-    description: 'Réalisée en 2013, la Résidence Ennakhil, située dans le quartier des Jardins de L\'Aouina, offre un cadre de vie exceptionnel. Cette résidence moderne combine architecture contemporaine et confort optimal pour ses résidents. Chaque appartement bénéficie de finitions haut de gamme, d\'espaces lumineux et d\'une vue dégagée.',
-    location: 'Jardins de L\'Aouina, Tunis',
-    yearCompleted: 2013,
-    status: 'completed' as const,
-    images: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200',
-    ],
-    propertiesCount: 12,
-    type: 'residential' as const,
-    features: [
-      'Architecture moderne',
-      'Finitions haut de gamme',
-      'Espaces verts aménagés',
-      'Parking sécurisé',
-      'Ascenseurs',
-      'Gardiennage 24/7',
-      'Proximité commodités',
-      'Quartier calme',
-    ],
-    specifications: {
-      'Type de projet': 'Résidentiel',
-      'Nombre d\'appartements': '12',
-      'Année de réalisation': '2013',
-      'Statut': 'Terminé',
-      'Étages': 'R+4',
-      'Superficie du terrain': '1 200 m²',
+export async function generateMetadata(props: any) {
+  const paramsRaw = await Promise.resolve(props?.params ?? {});
+  let params: Record<string, any>;
+  if (paramsRaw && typeof (paramsRaw as any).get === 'function') {
+    params = {};
+    for (const entry of (paramsRaw as any).entries() as Iterable<readonly [string, any]>) {
+      const [k, v] = entry;
+      params[k] = v;
+    }
+  } else {
+    params = { ...(paramsRaw as any) };
+  }
+  const project = await getProjectBySlug(params.slug)
+  if (!project) return {}
+  const canonical = `/projets/${project.slug}`
+  const description = project.description?.replace(/[#*_`]/g, "").slice(0, 160) || undefined
+  return {
+    title: project.name,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title: project.name,
+      description,
+      url: canonical,
+      siteName: SITE.name,
+      locale: "fr_TN",
+      images: project.images && project.images.length ? [project.images[0]] : [],
     },
-  };
+    twitter: {
+      card: "summary_large_image",
+      title: project.name,
+      description,
+      images: project.images && project.images.length ? [project.images[0]] : [],
+    },
+  } as any
+}
 
-  const availableProperties = [
-    {
-      id: '1',
-      title: 'Appartement S+3 - Résidence Ennakhil',
-      price: 380000,
-      location: 'Jardins de L\'Aouina',
-      type: 'residential' as const,
-      rooms: 4,
-      bathrooms: 2,
-      area: 125,
-      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
-      status: 'available' as const,
-    },
-    {
-      id: '2',
-      title: 'Appartement S+2 - Résidence Ennakhil',
-      price: 320000,
-      location: 'Jardins de L\'Aouina',
-      type: 'residential' as const,
-      rooms: 3,
-      bathrooms: 2,
-      area: 95,
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-      status: 'available' as const,
-    },
-  ];
+export default async function ProjectDetailPage(props: any) {
+  const paramsRaw = await Promise.resolve(props?.params ?? {});
+  let params: Record<string, any>;
+  if (paramsRaw && typeof (paramsRaw as any).get === 'function') {
+    params = {};
+    for (const entry of (paramsRaw as any).entries() as Iterable<readonly [string, any]>) {
+      const [k, v] = entry;
+      params[k] = v;
+    }
+  } else {
+    params = { ...(paramsRaw as any) };
+  }
+  const project = await getProjectBySlug(params.slug)
+  if (!project) return notFound()
+
+  const availableProperties = await getProjectProperties(project.id)
+  const canonicalUrl = `${SITE.url}/projets/${project.slug}`
+  const projectImage = project.images?.[0]
+    ? new URL(project.images[0], SITE.url).toString()
+    : `${SITE.url}/IBM_logo_black_transparent.png`
 
   return (
     <>
       <Header />
-      
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ApartmentComplex",
+            name: project.name,
+            description: project.description,
+            url: canonicalUrl,
+            image: projectImage,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: project.location,
+              addressCountry: "TN",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Accueil", item: SITE.url },
+              { "@type": "ListItem", position: 2, name: "Projets", item: `${SITE.url}/projets` },
+              { "@type": "ListItem", position: 3, name: project.name, item: canonicalUrl },
+            ],
+          },
+        ]}
+      />
+      <MetaViewContentTracker
+        contentId={project.id}
+        contentName={project.name}
+        contentCategory="project"
+      />
+
       <main className="pt-20">
-        <section className="relative h-96 bg-slate-900">
+        <section className="relative h-[500px] bg-[var(--color-foreground)]">
           <Image
-            src={project.images[0]}
+            src={project.images && project.images.length ? project.images[0] : "/generated-icon.png"}
             alt={project.name}
             fill
             className="object-cover opacity-40"
           />
-          <div className="absolute inset-0 flex items-center justify-center text-white">
-            <div className="text-center">
-              <div className={`inline-block ${project.status === 'completed' ? 'bg-green-500' : 'bg-blue-500'} px-4 py-2 rounded-full text-sm font-medium mb-4`}>
-                {project.status === 'completed' ? 'Projet Terminé' : 'En cours'}
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-foreground)] to-transparent" />
+          <div className="absolute inset-0 flex items-end">
+            <div className="container mx-auto pb-12">
+              <div
+                className={`inline-block px-4 py-2 rounded-xl text-sm font-semibold mb-4 ${project.status === "completed" ? "bg-green-500 text-white" : "bg-[var(--color-primary)] text-white"}`}
+              >
+                {project.status === "completed" ? "Projet Terminé" : "En cours"}
               </div>
-              <h1 className="text-5xl font-bold mb-4">{project.name}</h1>
-              <p className="text-xl flex items-center justify-center">
-                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 text-balance">{project.name}</h1>
+              <p className="text-white/90 text-lg flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
                 </svg>
                 {project.location}
               </p>
@@ -96,53 +144,68 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
         </section>
 
         <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               <div className="lg:col-span-2">
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">À propos du projet</h2>
-                <p className="text-slate-700 leading-relaxed mb-8 text-lg">
-                  {project.description}
-                </p>
+                <h2 className="text-3xl font-extrabold text-[var(--color-foreground)] mb-6">À propos du projet</h2>
+                <article className="prose lg:prose-lg max-w-none mb-12">
+                  {/* normalize description:
+                      - convert literal "\\n" sequences (from some DB editors) into real newlines
+                      - normalize CRLF to LF
+                      - convert single newlines into double newlines so ReactMarkdown treats them as paragraph breaks
+                  */}
+                  {(() => {
+                    const raw = (project.description as string) || ''
+                    const unescaped = raw.replace(/\\n/g, '\n')
+                    const lf = unescaped.replace(/\r\n/g, '\n')
+                    const asParagraphs = lf.replace(/\n(?!\n)/g, '\n\n')
+                    return (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                        {asParagraphs}
+                      </ReactMarkdown>
+                    )
+                  })()}
+                </article>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                  {project.images.slice(1).map((img, idx) => (
-                    <div key={idx} className="relative h-40 rounded-lg overflow-hidden">
-                      <Image
-                        src={img}
-                        alt={`${project.name} - Image ${idx + 2}`}
-                        fill
-                        className="object-cover hover:scale-110 transition-transform"
-                      />
-                    </div>
-                  ))}
-                </div>
+                {/* Expanded Gallery (main image + thumbnails) */}
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-[var(--color-foreground)] mb-6">Galerie photos</h2>
+                  {(project.images || []).length === 0 ? (
+                    <div className="h-64 bg-neutral-100 rounded-2xl flex items-center justify-center">Aucune image disponible</div>
+                  ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                      {/* large main image */}
+                      <div className="lg:col-span-2 relative h-80 rounded-2xl overflow-hidden border-2 border-neutral-100">
+                        <Image src={project.images[0] || '/placeholder.svg'} alt={project.name} fill className="object-cover" />
+                      </div>
 
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">Caractéristiques</h2>
-                <div className="grid grid-cols-2 gap-4 mb-12">
-                  {project.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center text-slate-700">
-                      <svg className="w-5 h-5 mr-3 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
+                      {/* thumbnails */}
+                      <div className="grid grid-cols-3 gap-4">
+                        {project.images.map((img: string, idx: number) => (
+                          <div key={idx} className="relative h-24 rounded-xl overflow-hidden border-2 border-neutral-100 hover:border-[var(--color-primary)] transition-all">
+                            <Image src={img || '/placeholder.svg'} alt={`${project.name} - Image ${idx + 1}`} fill className="object-cover" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
+              {/* Sidebar */}
               <div>
-                <div className="bg-slate-50 rounded-xl p-6 sticky top-24">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-6">Spécifications</h3>
-                  <div className="space-y-4">
-                    {Object.entries(project.specifications).map(([key, value]) => (
-                      <div key={key} className="border-b border-slate-200 pb-3">
-                        <p className="text-sm text-slate-600 mb-1">{key}</p>
-                        <p className="font-semibold text-slate-900">{value}</p>
+                <div className="bg-gradient-to-br from-neutral-50 to-white rounded-2xl p-8 border-2 border-neutral-100 sticky top-24">
+                  <h3 className="text-2xl font-bold text-[var(--color-foreground)] mb-6">Spécifications</h3>
+                  <div className="space-y-4 mb-8">
+                    {Object.entries(project.specifications || {}).map(([key, value]) => (
+                      <div key={key} className="pb-4 border-b border-neutral-200 last:border-0">
+                        <p className="text-sm text-[var(--color-muted)] mb-1 font-medium">{key}</p>
+                        <p className="font-bold text-[var(--color-foreground)] text-lg">{value}</p>
                       </div>
                     ))}
                   </div>
-                  
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors mt-6">
+
+                  <button className="w-full bg-[var(--color-primary)] text-white py-4 rounded-xl font-bold hover:bg-[var(--color-primary-600)] hover:shadow-xl transition-all">
                     Contactez-nous
                   </button>
                 </div>
@@ -151,14 +214,22 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
           </div>
         </section>
 
-        {availableProperties.length > 0 && (
-          <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">Propriétés disponibles</h2>
-              <p className="text-slate-600 mb-8">Découvrez les biens disponibles dans ce projet</p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {availableProperties.map((property) => (
+        {(project.units || []).length > 0 && (
+          <section className="py-12 bg-white">
+            <div className="container mx-auto">
+              <UnitsTable units={project.units || []} projectName={project.name} />
+            </div>
+          </section>
+        )}
+
+        {(availableProperties || []).length > 0 && (
+          <section className="py-20 bg-neutral-50">
+            <div className="container mx-auto">
+              <h2 className="text-3xl font-extrabold text-[var(--color-foreground)] mb-2">Propriétés disponibles</h2>
+              <p className="text-[var(--color-muted)] text-lg mb-12">Découvrez les biens disponibles dans ce projet</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {availableProperties.map((property: any) => (
                   <PropertyCard key={property.id} {...property} />
                 ))}
               </div>
@@ -169,5 +240,5 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
 
       <Footer />
     </>
-  );
+  )
 }

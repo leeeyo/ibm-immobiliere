@@ -1,101 +1,120 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import BlogCard from '@/components/BlogCard';
+import type { Metadata } from "next"
+import Link from "next/link"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+import BlogCard from "@/components/BlogCard"
+import { getBlogPosts } from "@/lib/actions/blog"
+import { SITE } from "@/lib/constants/site"
 
-export const metadata = {
-  title: 'Blog - IBM Immobilière',
-  description: 'Actualités, conseils et tendances de l\'immobilier en Tunisie',
-};
+export const revalidate = 600
 
-export default async function BlogPage() {
-  const posts = [
-    {
-      slug: 'amenager-bureau-medical',
-      title: 'Aménagez votre bureau médical en toute simplicité à la Résidence Amira',
-      excerpt: 'Découvrez nos conseils pour créer un espace médical à la fois pratique et accueillant pour vos patients. De la disposition des salles d\'attente aux équipements nécessaires.',
-      author: 'IBM Immobilière',
-      featuredImage: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800',
-      category: 'Conseils',
-      createdAt: new Date('2025-02-18'),
-    },
-    {
-      slug: '15-annees-parcours',
-      title: '15 années d\'un parcours exceptionnel',
-      excerpt: 'Retour sur 15 ans d\'excellence dans l\'immobilier tunisien et les projets qui ont marqué notre histoire. Une aventure passionnante au service de nos clients.',
-      author: 'IBM Immobilière',
-      featuredImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800',
-      category: 'Actualités',
-      createdAt: new Date('2025-01-09'),
-    },
-    {
-      slug: 'investir-immobilier-2025',
-      title: 'Pourquoi investir dans l\'immobilier en 2025 ?',
-      excerpt: 'L\'immobilier reste l\'un des investissements les plus sûrs. Découvrez les opportunités du marché tunisien et comment maximiser votre rendement.',
-      author: 'IBM Immobilière',
-      featuredImage: 'https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=800',
-      category: 'Investissement',
-      createdAt: new Date('2024-12-15'),
-    },
-    {
-      slug: 'choisir-quartier-tunis',
-      title: 'Comment choisir le bon quartier à Tunis ?',
-      excerpt: 'Guide complet pour choisir votre futur quartier : écoles, transports, commerces, sécurité. Tous nos conseils pour faire le bon choix.',
-      author: 'IBM Immobilière',
-      featuredImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800',
-      category: 'Conseils',
-      createdAt: new Date('2024-11-20'),
-    },
-  ];
+const description =
+  "Articles sur l’achat, l’investissement et le logement en Tunisie : Tunis, Ariana, littoral et programmes neufs. Rédaction IBM Immobilière."
 
-  const categories = ['Tous', 'Actualités', 'Conseils', 'Investissement', 'Tendances'];
+export const metadata: Metadata = {
+  title: "Blog immobilier en Tunisie — conseils et actualités",
+  description,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: `Blog · ${SITE.name}`,
+    description:
+      "Conseils immobiliers pour la Tunisie : primo-accédants, investisseurs, diaspora et professionnels.",
+    url: `${SITE.url}/blog`,
+    locale: "fr_TN",
+    siteName: SITE.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Blog · ${SITE.name}`,
+    description,
+  },
+}
+
+export default async function BlogIndexPage() {
+  const posts = await getBlogPosts()
+  const sorted = [...posts].sort((a, b) => {
+    const ta = a.createdAt ? new Date(a.createdAt).getTime() : 0
+    const tb = b.createdAt ? new Date(b.createdAt).getTime() : 0
+    return tb - ta
+  })
+
+  const itemListJson = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `Blog — ${SITE.name}`,
+    description,
+    numberOfItems: sorted.length,
+    itemListElement: sorted.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE.url}/blog/${post.slug}`,
+      name: post.title,
+    })),
+  }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(itemListJson),
+        }}
+      />
       <Header />
-      
-      <main className="pt-20">
-        <section className="bg-gradient-to-br from-blue-900 to-slate-900 py-20 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Notre Blog
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Actualités, conseils et tendances de l&apos;immobilier en Tunisie
+
+      <main
+        id="contenu-principal"
+        className="pt-24 pb-20 lg:pb-24 lg:pt-[var(--ibm-blog-header-pad)]"
+      >
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-6xl lg:px-10 xl:px-12">
+          <header className="mb-14 border-b border-neutral-200 pb-10 lg:mb-16 lg:flex lg:items-end lg:justify-between lg:gap-12 lg:pb-12">
+            <div className="min-w-0 lg:max-w-3xl">
+              <p className="text-sm font-medium uppercase tracking-wide text-[var(--color-muted)]">
+                Actualités &amp; conseils
+              </p>
+              <h1 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-[var(--color-foreground)] sm:text-4xl">
+                Blog immobilier
+              </h1>
+              <p className="mt-4 text-lg leading-relaxed text-[var(--color-muted)] lg:text-xl lg:leading-relaxed">
+                {description}
+              </p>
+            </div>
+            <nav
+              aria-label="Fil d&apos;Ariane"
+              className="mt-6 text-sm text-[var(--color-muted)] lg:mt-0 lg:shrink-0"
+            >
+              <ol className="flex flex-wrap items-center gap-2 lg:justify-end">
+                <li>
+                  <Link href="/" className="text-[var(--color-primary)] underline-offset-4 hover:underline">
+                    Accueil
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li className="text-[var(--color-foreground)]">Blog</li>
+              </ol>
+            </nav>
+          </header>
+
+          {sorted.length === 0 ? (
+            <p className="text-[var(--color-muted)]">
+              Aucun article pour le moment. Revenez bientôt ou{" "}
+              <Link className="text-[var(--color-primary)] underline-offset-4 hover:underline" href="/contact">
+                contactez-nous
+              </Link>
+              .
             </p>
-          </div>
-        </section>
-
-        <section className="py-4 bg-white border-b border-slate-200 sticky top-20 z-40">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center gap-3 flex-wrap">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                    category === 'Tous'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
-                >
-                  {category}
-                </button>
+          ) : (
+            <div className="flex flex-col gap-12 lg:grid lg:grid-cols-2 lg:gap-x-10 lg:gap-y-12 xl:gap-x-12">
+              {sorted.map((post) => (
+                <BlogCard key={post.slug} {...post} titleHeading="h2" />
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
-                <BlogCard key={post.slug} {...post} />
-              ))}
-            </div>
-          </div>
-        </section>
+          )}
+        </div>
       </main>
 
       <Footer />
     </>
-  );
+  )
 }
