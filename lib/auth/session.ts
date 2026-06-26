@@ -20,12 +20,16 @@ function cleanEnv(value: string | undefined): string {
   return trimmed;
 }
 
+function readEnv(name: string): string {
+  return cleanEnv(process.env[name]);
+}
+
 function getSessionPassword(): string {
   const sessionPassword =
-    cleanEnv(process.env.SESSION_PASSWORD) ||
+    readEnv("SESSION_PASSWORD") ||
     "dev-only-32+chars-secret-change-me-please-XXXX";
 
-  if (process.env.NODE_ENV === "production" && !cleanEnv(process.env.SESSION_PASSWORD)) {
+  if (process.env.NODE_ENV === "production" && !readEnv("SESSION_PASSWORD")) {
     throw new Error("SESSION_PASSWORD env var is required in production.");
   }
 

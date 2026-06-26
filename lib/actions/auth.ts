@@ -25,12 +25,29 @@ function cleanEnv(value: string | undefined): string {
   return trimmed;
 }
 
+function readEnv(name: string): string {
+  return cleanEnv(process.env[name]);
+}
+
+function decodeBase64Env(value: string): string {
+  if (!value) return "";
+  try {
+    return Buffer.from(value, "base64").toString("utf8").trim();
+  } catch {
+    return "";
+  }
+}
+
 function getAdminCredentials() {
+  const passwordHash =
+    readEnv("ADMIN_PASSWORD_HASH") ||
+    decodeBase64Env(readEnv("ADMIN_PASSWORD_HASH_B64"));
+
   return {
-    email: cleanEnv(process.env.ADMIN_EMAIL) || "admin@ibm-immobiliere.tn",
-    name: cleanEnv(process.env.ADMIN_NAME) || "Administrateur",
-    passwordHash: cleanEnv(process.env.ADMIN_PASSWORD_HASH),
-    passwordPlain: cleanEnv(process.env.ADMIN_PASSWORD),
+    email: readEnv("ADMIN_EMAIL") || "admin@ibm-immobiliere.tn",
+    name: readEnv("ADMIN_NAME") || "Administrateur",
+    passwordHash,
+    passwordPlain: readEnv("ADMIN_PASSWORD"),
   };
 }
 
