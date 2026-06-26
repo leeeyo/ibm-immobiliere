@@ -1,13 +1,22 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Lock, Mail, Loader2 } from "lucide-react";
 import { loginAction, type LoginState } from "@/lib/actions/auth";
 
 const initialState: LoginState = {};
 
 export default function LoginForm() {
+  const router = useRouter();
   const [state, action, pending] = useActionState(loginAction, initialState);
+
+  useEffect(() => {
+    if (state.ok) {
+      router.replace("/admin");
+      router.refresh();
+    }
+  }, [router, state.ok]);
 
   return (
     <form action={action} className="space-y-5">
