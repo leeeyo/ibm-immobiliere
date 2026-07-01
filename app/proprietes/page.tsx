@@ -53,7 +53,7 @@ export default async function PropertiesPage(props: any) {
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
               Explorez tous les appartements et locaux signés IBM Immobilière,
-              disponibles à la vente. Filtres précis par type, surface, prix et
+              disponibles à la vente. Filtres précis par type, surface et
               localisation.
             </p>
             <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur-sm">

@@ -95,18 +95,10 @@ export default function PropertyCard({
           </span>
         </div>
 
-        <div className="mt-5 pt-5 border-t border-[var(--color-stone-100)] flex items-end justify-between">
-          <div>
-            <p className="text-[11px] uppercase tracking-wider text-[var(--color-stone-500)]">
-              Prix
-            </p>
-            <p className="font-display text-2xl text-[var(--color-navy-900)] leading-none">
-              {typeof price === "number" ? price.toLocaleString("fr-TN") : "—"}{" "}
-              <span className="text-sm font-sans font-semibold text-[var(--color-stone-500)]">
-                DT
-              </span>
-            </p>
-          </div>
+        <div className="mt-5 pt-5 border-t border-[var(--color-stone-100)] flex items-center justify-between">
+          <span className="text-[11px] uppercase tracking-wider text-[var(--color-stone-500)]">
+            Voir les détails
+          </span>
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-ivory-100)] text-[var(--color-navy-900)] transition-all group-hover:bg-[var(--color-gold-500)]">
             <ArrowUpRight className="h-4 w-4" />
           </span>

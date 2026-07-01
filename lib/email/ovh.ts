@@ -54,7 +54,7 @@ export async function sendLeadNotification(input: LeadMail): Promise<boolean> {
       `Email: ${input.email}`,
       `Téléphone: ${input.phone || "Non renseigné"}`,
       `Sujet: ${input.subject || "Demande générale"}`,
-      input.propertyRef ? `Bien: ${input.propertyRef}` : "",
+      input.propertyRef ? `Référence: ${input.propertyRef}` : "",
       input.sourceUrl ? `Page: ${input.sourceUrl}` : "",
       "",
       input.message,
@@ -66,7 +66,7 @@ export async function sendLeadNotification(input: LeadMail): Promise<boolean> {
         <strong>Email :</strong> ${escapeHtml(input.email)}<br>
         <strong>Téléphone :</strong> ${escapeHtml(input.phone || "Non renseigné")}<br>
         <strong>Sujet :</strong> ${escapeHtml(input.subject || "Demande générale")}</p>
-        ${input.propertyRef ? `<p><strong>Bien :</strong> ${escapeHtml(input.propertyRef)}</p>` : ""}
+        ${input.propertyRef ? `<p><strong>Référence :</strong> ${escapeHtml(input.propertyRef)}</p>` : ""}
         <div style="padding:16px;background:#f7f5ef;border-left:3px solid #c8a560">${escapeHtml(input.message).replace(/\n/g, "<br>")}</div>
         ${input.sourceUrl ? `<p style="font-size:12px;color:#666">Page : ${escapeHtml(input.sourceUrl)}</p>` : ""}
       </div>`,

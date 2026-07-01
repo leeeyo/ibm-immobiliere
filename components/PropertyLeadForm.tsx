@@ -137,8 +137,8 @@ export default function PropertyLeadForm({
         name="message"
         rows={3}
         required
-        placeholder="Votre message ou questions sur ce bien…"
-        defaultValue={`Bonjour, je suis intéressé(e) par le bien "${propertyRef}". Pourriez-vous m'envoyer une offre de prix et plus d'informations ?`}
+        placeholder="Votre message ou vos questions…"
+        defaultValue={`Bonjour, je suis intéressé(e) par "${propertyRef}". Pourriez-vous m'envoyer plus d'informations ?`}
         className="w-full rounded-md border border-white/15 bg-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-[var(--color-gold-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold-500)]/30"
       />
       {state.fieldErrors?.message ? (
@@ -151,7 +151,7 @@ export default function PropertyLeadForm({
 
       <button type="submit" disabled={pending} className="btn btn-gold w-full disabled:opacity-60">
         {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-        {pending ? "Envoi…" : "Demander une offre de prix"}
+        {pending ? "Envoi…" : "Demander des informations"}
       </button>
     </form>
   );

@@ -132,7 +132,7 @@ export async function submitContactForm(
     );
     const value = isPropertyLead ? 100 : 50;
     const contentName = isPropertyLead
-      ? data.propertyRef || data.subject || "Demande bien immobilier"
+      ? data.propertyRef || data.subject || "Demande immobilière"
       : data.subject || "Formulaire de contact";
     const contentCategory = isPropertyLead ? "property_lead" : "contact_form";
 

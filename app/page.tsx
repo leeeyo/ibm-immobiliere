@@ -509,11 +509,6 @@ function PropertyCardFeature(p: any) {
             <div className="mt-3 flex items-center gap-4 text-sm text-white/75">
               {p.rooms ? <span>{p.rooms} pièces</span> : null}
               {p.area ? <span>{p.area} m²</span> : null}
-              {typeof p.price === "number" ? (
-                <span className="font-display text-white">
-                  {p.price.toLocaleString("fr-TN")} <span className="text-xs">DT</span>
-                </span>
-              ) : null}
             </div>
           </div>
           <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/20 transition-all group-hover:bg-[var(--color-gold-500)] group-hover:text-[var(--color-navy-900)]">
@@ -557,14 +552,8 @@ function PropertyCardWide(p: any) {
             {p.area ? <span>{p.area} m²</span> : null}
           </div>
         </div>
-        <div className="mt-4 flex items-end justify-between">
-          <div>
-            <span className="caption">Prix</span>
-            <p className="mt-0.5 font-display text-xl text-[var(--color-navy-900)] leading-none">
-              {typeof p.price === "number" ? p.price.toLocaleString("fr-TN") : "—"}{" "}
-              <span className="text-xs text-[var(--color-stone-500)]">DT</span>
-            </p>
-          </div>
+        <div className="mt-4 flex items-center justify-between">
+          <span className="caption">Voir les détails</span>
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-ivory-100)] text-[var(--color-navy-900)] transition-all group-hover:bg-[var(--color-gold-500)]">
             <ArrowUpRight className="h-4 w-4" />
           </span>

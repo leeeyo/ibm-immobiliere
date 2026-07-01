@@ -118,16 +118,6 @@ export default async function PropertyDetailPage(props: any) {
               addressLocality: property.location,
               addressCountry: "TN",
             },
-            offers: {
-              "@type": "Offer",
-              price: property.price,
-              priceCurrency: "TND",
-              url: canonicalUrl,
-              availability:
-                property.status === "available"
-                  ? "https://schema.org/InStock"
-                  : "https://schema.org/SoldOut",
-            },
           },
           {
             "@context": "https://schema.org",
@@ -144,7 +134,6 @@ export default async function PropertyDetailPage(props: any) {
         contentId={property.id}
         contentName={property.title}
         contentCategory="property"
-        value={Number(property.price)}
       />
 
       <main className="pt-20 bg-white">
@@ -275,14 +264,6 @@ export default async function PropertyDetailPage(props: any) {
             {/* Sidebar */}
             <aside className="lg:sticky lg:top-28 self-start">
               <div className="rounded-2xl bg-[var(--color-navy-950)] text-white p-7 shadow-[0_24px_60px_-15px_rgba(11,23,51,0.45)]">
-                <p className="text-xs uppercase tracking-widest text-[var(--color-gold-400)]">Prix</p>
-                <p className="mt-1 font-display text-4xl text-white leading-none">
-                  {Number(property.price).toLocaleString("fr-TN")}
-                  <span className="ml-1.5 text-base font-sans font-semibold text-white/70">DT</span>
-                </p>
-
-                <hr className="my-5 border-white/10" />
-
                 <PropertyLeadForm
                   propertyId={property.id}
                   propertyRef={property.reference || property.title}

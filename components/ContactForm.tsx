@@ -135,7 +135,7 @@ export default function ContactForm() {
         as="select"
         options={[
           "Demande d'information",
-          "Demande d'offre de prix",
+          "Demande d'informations",
           "Visite d'un bien",
           "Autre",
         ]}

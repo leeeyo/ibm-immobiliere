@@ -20,8 +20,6 @@ export default function SortSelect() {
       className="rounded-md border border-[var(--color-stone-300)] bg-white px-3 py-2 text-sm text-[var(--color-navy-900)] focus:border-[var(--color-navy-900)] focus:outline-none focus:ring-2 focus:ring-[var(--color-gold-500)]/30"
     >
       <option value="">Plus récentes</option>
-      <option value="price_asc">Prix croissant</option>
-      <option value="price_desc">Prix décroissant</option>
       <option value="area_asc">Surface croissante</option>
       <option value="area_desc">Surface décroissante</option>
     </select>
