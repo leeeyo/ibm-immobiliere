@@ -14,6 +14,14 @@ interface Props {
   max?: number;
 }
 
+type UploadItem = {
+  id: string;
+  name: string;
+  status: "queued" | "uploading" | "done" | "error";
+};
+
+const UPLOAD_CONCURRENCY = 2;
+
 /**
  * Multi-image uploader. Posts a hidden JSON value under `name` for the form.
  * Images are uploaded immediately on selection (server-side via Action).
@@ -28,39 +36,78 @@ export default function ImageUploader({
   const [images, setImages] = useState<string[]>(defaultValue);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploadItems, setUploadItems] = useState<UploadItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const updateUploadItem = (id: string, patch: Partial<UploadItem>) => {
+    setUploadItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, ...patch } : item))
+    );
+  };
+
   const handleFiles = async (files: FileList | null) => {
-    if (!files || files.length === 0) return;
+    if (pending || !files || files.length === 0) return;
     const remaining = max - images.length;
     if (remaining <= 0) {
       setError(`Limite de ${max} images atteinte.`);
       return;
     }
+
     const slice = Array.from(files).slice(0, remaining);
+    const batch = slice.map((file, index) => ({
+      id: `${Date.now()}-${index}-${file.name}`,
+      name: file.name,
+      status: "queued" as const,
+    }));
 
     setError(null);
+    setUploadItems(batch);
     setPending(true);
-    try {
-      const uploaded: string[] = [];
-      for (const file of slice) {
-        const fd = new FormData();
-        fd.set("entity", entity);
-        fd.set("folder", folder);
-        fd.append("files", file);
 
-        // Upload one file per Server Action call so the request body stays under
-        // hosting/proxy limits even when users select many images at once.
-        // eslint-disable-next-line no-await-in-loop
-        const res = await uploadImages(fd);
-        if (!res.success) {
-          setError(res.error);
-          break;
+    try {
+      const results: string[][] = Array.from({ length: slice.length }, () => []);
+      let nextIndex = 0;
+      let firstError: string | null = null;
+
+      async function uploadNext() {
+        while (nextIndex < slice.length) {
+          const index = nextIndex;
+          nextIndex += 1;
+
+          const file = slice[index];
+          const item = batch[index];
+          updateUploadItem(item.id, { status: "uploading" });
+
+          const fd = new FormData();
+          fd.set("entity", entity);
+          fd.set("folder", folder);
+          fd.append("files", file);
+
+          const res = await uploadImages(fd);
+          if (!res.success) {
+            firstError ||= res.error;
+            updateUploadItem(item.id, { status: "error" });
+            continue;
+          }
+
+          results[index] = res.urls;
+          updateUploadItem(item.id, { status: "done" });
         }
-        uploaded.push(...res.urls);
       }
+
+      await Promise.all(
+        Array.from(
+          { length: Math.min(UPLOAD_CONCURRENCY, slice.length) },
+          () => uploadNext()
+        )
+      );
+
+      const uploaded = results.flat();
       if (uploaded.length > 0) {
         setImages((prev) => [...prev, ...uploaded]);
+      }
+      if (firstError) {
+        setError(firstError);
       }
     } finally {
       setPending(false);
@@ -102,10 +149,10 @@ export default function ImageUploader({
           <Upload className="h-6 w-6 text-[var(--color-navy-700)]" />
         )}
         <p className="text-sm font-medium text-[var(--color-navy-900)]">
-          {pending ? "Téléversement…" : "Cliquer pour téléverser des images"}
+          {pending ? "Téléversement..." : "Cliquer pour téléverser des images"}
         </p>
         <p className="text-xs text-[var(--color-stone-500)]">
-          PNG, JPG, WEBP — jusqu&apos;à 10 Mo · {images.length} / {max}
+          PNG, JPG, WEBP - jusqu&apos;à 10 Mo · {images.length} / {max}
         </p>
         <input
           ref={inputRef}
@@ -118,9 +165,38 @@ export default function ImageUploader({
         />
       </label>
 
-      {error ? (
-        <p className="mt-2 text-sm text-red-700">{error}</p>
+      {uploadItems.length > 0 ? (
+        <ul className="mt-3 space-y-1.5 rounded-lg border border-[var(--color-stone-200)] bg-white p-3">
+          {uploadItems.map((item, idx) => (
+            <li key={item.id} className="flex items-center justify-between gap-3 text-xs">
+              <span className="min-w-0 truncate text-[var(--color-stone-600)]">
+                {idx + 1}. {item.name}
+              </span>
+              <span
+                className={cn(
+                  "shrink-0 rounded-full px-2 py-0.5 font-medium",
+                  item.status === "done" && "bg-emerald-50 text-emerald-700",
+                  item.status === "error" && "bg-red-50 text-red-700",
+                  item.status === "uploading" &&
+                    "bg-[var(--color-ivory-100)] text-[var(--color-navy-900)]",
+                  item.status === "queued" &&
+                    "bg-[var(--color-stone-100)] text-[var(--color-stone-600)]"
+                )}
+              >
+                {item.status === "queued"
+                  ? "En attente"
+                  : item.status === "uploading"
+                    ? "En cours"
+                    : item.status === "done"
+                      ? "Ajoutée"
+                      : "Erreur"}
+              </span>
+            </li>
+          ))}
+        </ul>
       ) : null}
+
+      {error ? <p className="mt-2 text-sm text-red-700">{error}</p> : null}
 
       {images.length > 0 ? (
         <ul className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
