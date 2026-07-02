@@ -58,7 +58,7 @@ export default async function LegalNoticePage() {
 
       <LegalSection title="Informations immobilières">
         <p>
-          Les surfaces, prix, disponibilités, rendus et délais sont communiqués à titre
+          Les surfaces, disponibilités, rendus et délais sont communiqués à titre
           informatif et peuvent évoluer. Seuls les documents contractuels signés engagent
           {` ${(settings.legalName || SITE.legalName)}`}.
         </p>

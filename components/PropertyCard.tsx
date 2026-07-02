@@ -31,7 +31,6 @@ export default function PropertyCard({
   id,
   slug,
   title,
-  price,
   location,
   type,
   rooms,

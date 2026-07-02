@@ -6,7 +6,6 @@ import sharp from "sharp";
 import { randomUUID } from "node:crypto";
 import { assertAdmin } from "@/lib/auth/session";
 
-const ROOT = path.join(process.cwd(), "public", "uploads");
 const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export type UploadResult =
@@ -19,6 +18,20 @@ function safeEntity(value: unknown): Entity {
   return value === "properties" || value === "projects" || value === "blog"
     ? value
     : "misc";
+}
+
+function getUploadRoot() {
+  return path.resolve(process.env.UPLOAD_ROOT || path.join(process.cwd(), "public", "uploads"));
+}
+
+function getUploadPath(...parts: string[]) {
+  const root = getUploadRoot();
+  const resolved = path.resolve(root, ...parts);
+  const relative = path.relative(root, resolved);
+  if (relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error("Invalid upload path");
+  }
+  return resolved;
 }
 
 export async function uploadImages(formData: FormData): Promise<UploadResult> {
@@ -38,7 +51,7 @@ export async function uploadImages(formData: FormData): Promise<UploadResult> {
     return { success: false, error: "Aucun fichier reçu." };
   }
 
-  const dir = path.join(ROOT, entity, folder);
+  const dir = getUploadPath(entity, folder);
   await fs.mkdir(dir, { recursive: true });
 
   const urls: string[] = [];
@@ -100,7 +113,7 @@ export async function uploadPdf(formData: FormData): Promise<UploadFileResult> {
     return { success: false, error: "Seuls les fichiers PDF sont acceptés." };
   }
 
-  const dir = path.join(ROOT, entity, folder);
+  const dir = getUploadPath(entity, folder);
   await fs.mkdir(dir, { recursive: true });
 
   const id = `plan-${Date.now().toString(36)}-${randomUUID().slice(0, 6)}`;
@@ -122,7 +135,7 @@ export async function deleteUpload(url: string): Promise<{ success: boolean }> {
     return { success: false };
   }
   if (!url.startsWith("/uploads/")) return { success: false };
-  const fp = path.join(process.cwd(), "public", url);
+  const fp = getUploadPath(...url.replace(/^\/uploads\/?/, "").split("/"));
   try {
     await fs.unlink(fp);
     return { success: true };
