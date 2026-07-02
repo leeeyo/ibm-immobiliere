@@ -12,7 +12,11 @@ import type { BlogPostType } from "@/lib/types"
 
 export const revalidate = 600
 
-async function resolveParams(props: { params?: unknown }) {
+type BlogPageProps = {
+  params?: Promise<{ slug?: string }>;
+};
+
+async function resolveParams(props: BlogPageProps) {
   const paramsRaw = await Promise.resolve(props?.params ?? {})
   let params: Record<string, unknown>
   if (paramsRaw && typeof (paramsRaw as { get?: unknown }).get === "function") {
@@ -143,7 +147,7 @@ function ShareArticleSection({
   )
 }
 
-export async function generateMetadata(props: { params?: unknown }): Promise<Metadata> {
+export async function generateMetadata(props: BlogPageProps): Promise<Metadata> {
   const slug = await resolveParams(props)
   if (!slug) return {}
   const post = await getBlogPostBySlug(slug)
@@ -184,7 +188,7 @@ export async function generateMetadata(props: { params?: unknown }): Promise<Met
   }
 }
 
-export default async function BlogPostPage(props: { params?: unknown }) {
+export default async function BlogPostPage(props: BlogPageProps) {
   const slug = await resolveParams(props)
   if (!slug) notFound()
 
