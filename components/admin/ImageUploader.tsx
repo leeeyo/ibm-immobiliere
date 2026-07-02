@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Upload, Trash2, GripVertical, Loader2 } from "lucide-react";
 import { uploadImages, deleteUpload } from "@/lib/actions/upload";
@@ -26,11 +26,11 @@ export default function ImageUploader({
   max = 12,
 }: Props) {
   const [images, setImages] = useState<string[]>(defaultValue);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFiles = (files: FileList | null) => {
+  const handleFiles = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
     const remaining = max - images.length;
     if (remaining <= 0) {
@@ -38,20 +38,34 @@ export default function ImageUploader({
       return;
     }
     const slice = Array.from(files).slice(0, remaining);
-    const fd = new FormData();
-    fd.set("entity", entity);
-    fd.set("folder", folder);
-    for (const f of slice) fd.append("files", f);
 
     setError(null);
-    startTransition(async () => {
-      const res = await uploadImages(fd);
-      if (!res.success) {
-        setError(res.error);
-        return;
+    setPending(true);
+    try {
+      const uploaded: string[] = [];
+      for (const file of slice) {
+        const fd = new FormData();
+        fd.set("entity", entity);
+        fd.set("folder", folder);
+        fd.append("files", file);
+
+        // Upload one file per Server Action call so the request body stays under
+        // hosting/proxy limits even when users select many images at once.
+        // eslint-disable-next-line no-await-in-loop
+        const res = await uploadImages(fd);
+        if (!res.success) {
+          setError(res.error);
+          break;
+        }
+        uploaded.push(...res.urls);
       }
-      setImages((prev) => [...prev, ...res.urls]);
-    });
+      if (uploaded.length > 0) {
+        setImages((prev) => [...prev, ...uploaded]);
+      }
+    } finally {
+      setPending(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
   };
 
   const removeAt = (idx: number) => {
@@ -78,7 +92,7 @@ export default function ImageUploader({
         className={cn(
           "flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed cursor-pointer text-center px-6 py-10 transition-colors",
           pending
-            ? "border-[var(--color-navy-300)] bg-white"
+            ? "border-[var(--color-navy-300)] bg-white pointer-events-none"
             : "border-[var(--color-stone-300)] bg-[var(--color-ivory-50)] hover:border-[var(--color-navy-900)] hover:bg-white"
         )}
       >
@@ -98,6 +112,7 @@ export default function ImageUploader({
           type="file"
           accept="image/*"
           multiple
+          disabled={pending}
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
         />
