@@ -36,6 +36,13 @@ const STATUS_META: Record<string, { label: string; cls: string }> = {
   available: { label: "Disponible", cls: "chip-success" },
   reserved: { label: "Réservé", cls: "chip-gold" },
   sold: { label: "Vendu", cls: "chip-danger" },
+  rented: { label: "Loué", cls: "chip-danger" },
+};
+
+const PERIOD_LABEL: Record<"month" | "week" | "day", string> = {
+  month: "mois",
+  week: "semaine",
+  day: "jour",
 };
 
 async function resolveProperty(slugOrId: string) {
@@ -87,7 +94,7 @@ export default async function PropertyDetailPage(props: any) {
   if (!property) return notFound();
 
   const [similar, settings] = await Promise.all([
-    getSimilarProperties(property.slug || property.id, property.type, 3),
+    getSimilarProperties(property.slug || property.id, property.type, property.intent || "sale", 3),
     getWebsiteSettings(),
   ]);
   const status = STATUS_META[property.status] || STATUS_META.available;
@@ -161,6 +168,14 @@ export default async function PropertyDetailPage(props: any) {
           <p className="mt-3 inline-flex items-center gap-2 text-[var(--color-stone-600)]">
             <MapPin className="h-4 w-4" /> {property.location}
           </p>
+          {property.showPrice ? (
+            <p className="mt-5 font-display text-2xl text-[var(--color-navy-900)]">
+              {Number(property.price).toLocaleString("fr-TN")} DT
+              {(property.intent || "sale") === "rent"
+                ? `/${PERIOD_LABEL[property.pricePeriod || "month"]}`
+                : ""}
+            </p>
+          ) : null}
         </header>
 
         {/* Gallery */}

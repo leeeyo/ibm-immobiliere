@@ -1,11 +1,15 @@
 import PageHeader from "@/components/admin/PageHeader";
 import PropertyForm from "../PropertyForm";
 import { listAllProjectsLite } from "@/lib/actions/projects";
+import { listActiveLocations } from "@/lib/actions/locations";
 
 export const dynamic = "force-dynamic";
 
 export default async function NewPropertyPage() {
-  const projects = await listAllProjectsLite();
+  const [projects, locations] = await Promise.all([
+    listAllProjectsLite(),
+    listActiveLocations(),
+  ]);
   return (
     <>
       <PageHeader
@@ -14,7 +18,7 @@ export default async function NewPropertyPage() {
         back={{ href: "/admin/properties", label: "Retour aux biens" }}
       />
       <div className="px-6 lg:px-10 py-8 max-w-5xl mx-auto">
-        <PropertyForm mode={{ kind: "create" }} projects={projects} />
+        <PropertyForm mode={{ kind: "create" }} projects={projects} locations={locations} />
       </div>
     </>
   );

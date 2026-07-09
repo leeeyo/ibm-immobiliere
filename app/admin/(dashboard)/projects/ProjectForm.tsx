@@ -6,16 +6,20 @@ import { Loader2, Save } from "lucide-react";
 import ImageUploader from "@/components/admin/ImageUploader";
 import UnitsEditor from "@/components/admin/UnitsEditor";
 import { createProject, updateProject } from "@/lib/actions/projects";
-import type { ProjectType, ProjectUnitType } from "@/lib/types";
+import type { LocationType, ProjectType, ProjectUnitType } from "@/lib/types";
 
 type Mode = { kind: "create" } | { kind: "edit"; project: ProjectType };
 
-export default function ProjectForm({ mode }: { mode: Mode }) {
+export default function ProjectForm({ mode, locations }: { mode: Mode; locations: LocationType[] }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
   const initial = mode.kind === "edit" ? mode.project : null;
+  const initialLocationId =
+    initial?.locationId ||
+    locations.find((location) => location.name.toLowerCase() === initial?.location?.toLowerCase())?.id ||
+    "";
 
   const onSubmit = async (formData: FormData) => {
     setError(null);
@@ -34,7 +38,8 @@ export default function ProjectForm({ mode }: { mode: Mode }) {
     const input = {
       name: String(formData.get("name") || "").trim(),
       description: String(formData.get("description") || "").trim(),
-      location: String(formData.get("location") || "").trim(),
+      location: "",
+      locationId: String(formData.get("locationId") || ""),
       yearCompleted: Number(formData.get("yearCompleted")) || new Date().getFullYear(),
       status: String(formData.get("status") || "ongoing") as "planned" | "ongoing" | "completed",
       type: String(formData.get("type") || "residential") as "residential" | "commercial",
@@ -45,7 +50,7 @@ export default function ProjectForm({ mode }: { mode: Mode }) {
       units,
     };
 
-    if (!input.name || !input.description || !input.location) {
+    if (!input.name || !input.description || !input.locationId) {
       setError("Merci de renseigner les champs obligatoires.");
       return;
     }
@@ -91,7 +96,14 @@ export default function ProjectForm({ mode }: { mode: Mode }) {
       <Card title="Localisation & statut">
         <Grid>
           <Field label="Localisation *" required>
-            <input type="text" name="location" required defaultValue={initial?.location} className={inputCls} />
+            <select name="locationId" required defaultValue={initialLocationId} className={inputCls}>
+              <option value="">Choisir une localisation</option>
+              {locations.map((location) => (
+                <option key={location.id} value={location.id}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
           </Field>
           <Field label="Année de livraison">
             <input

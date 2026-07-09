@@ -3,7 +3,11 @@ export type PropertyType = {
   title: string;
   description: string;
   price: number;
+  showPrice?: boolean;
+  pricePeriod?: 'month' | 'week' | 'day';
   location: string;
+  locationId?: string;
+  intent?: 'sale' | 'rent';
   type: 'residential' | 'commercial';
   rooms?: number;
   bathrooms?: number;
@@ -12,7 +16,7 @@ export type PropertyType = {
   planUrl?: string;
   images: string[];
   videos?: string[];
-  status: 'available' | 'sold' | 'reserved';
+  status: 'available' | 'sold' | 'reserved' | 'rented';
   featured?: boolean;
   projectId?: string;
   slug: string;
@@ -42,6 +46,7 @@ export type ProjectType = {
   slug: string;
   description: string;
   location: string;
+  locationId?: string;
   yearCompleted: number;
   status: 'planned' | 'ongoing' | 'completed';
   images: string[];
@@ -87,6 +92,9 @@ export type TestimonialType = {
 
 export type SearchFilters = {
   type?: 'all' | 'residential' | 'commercial';
+  intent?: 'sale' | 'rent';
+  location?: string;
+  locations?: string[];
   query?: string;
   rooms?: number;
   minPrice?: number;
@@ -96,6 +104,16 @@ export type SearchFilters = {
   sort?: string;
   page?: number;
   limit?: number;
+};
+
+export type LocationType = {
+  id: string;
+  name: string;
+  slug: string;
+  active: boolean;
+  sortOrder: number;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type ContactFormData = {

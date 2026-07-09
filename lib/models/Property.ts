@@ -6,7 +6,11 @@ export interface IProperty {
   reference?: string;
   description: string;
   price: number;
+  showPrice: boolean;
+  pricePeriod?: "month" | "week" | "day";
   location: string;
+  locationId?: mongoose.Types.ObjectId;
+  intent: "sale" | "rent";
   type: "residential" | "commercial";
   rooms?: number;
   bathrooms?: number;
@@ -16,7 +20,7 @@ export interface IProperty {
   orientation?: "Nord" | "Sud" | "Est" | "Ouest" | "Nord-Est" | "Nord-Ouest" | "Sud-Est" | "Sud-Ouest";
   images: string[];
   videos: string[];
-  status: "available" | "sold" | "reserved";
+  status: "available" | "sold" | "reserved" | "rented";
   featured: boolean;
   projectId?: mongoose.Types.ObjectId;
   features?: string[];
@@ -34,7 +38,11 @@ const PropertySchema = new Schema<IProperty>(
     reference: { type: String, trim: true, index: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
+    showPrice: { type: Boolean, default: false },
+    pricePeriod: { type: String, enum: ["month", "week", "day"], default: "month" },
     location: { type: String, required: true },
+    locationId: { type: Schema.Types.ObjectId, ref: "Location", default: null, index: true },
+    intent: { type: String, enum: ["sale", "rent"], default: "sale", index: true },
     type: { type: String, enum: ["residential", "commercial"], required: true },
     rooms: { type: Number },
     bathrooms: { type: Number },
@@ -48,7 +56,7 @@ const PropertySchema = new Schema<IProperty>(
     brochureUrl: { type: String },
     virtualTourUrl: { type: String },
     videoUrl: { type: String },
-    status: { type: String, enum: ["available", "sold", "reserved"], default: "available" },
+    status: { type: String, enum: ["available", "sold", "reserved", "rented"], default: "available" },
     featured: { type: Boolean, default: false },
     projectId: { type: Schema.Types.ObjectId, ref: "Project", default: null },
   },
@@ -56,6 +64,7 @@ const PropertySchema = new Schema<IProperty>(
 );
 
 PropertySchema.index({ type: 1, status: 1 });
+PropertySchema.index({ intent: 1, status: 1, locationId: 1 });
 PropertySchema.index({ featured: 1 });
 PropertySchema.index({ projectId: 1 });
 

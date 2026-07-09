@@ -12,12 +12,14 @@ const STATUS_CHIPS: Record<string, string> = {
   available: "chip-success",
   reserved: "chip-gold",
   sold: "chip-danger",
+  rented: "chip-danger",
 };
 
 const STATUS_LABEL: Record<string, string> = {
   available: "Disponible",
   reserved: "Réservé",
   sold: "Vendu",
+  rented: "Loué",
 };
 
 export default async function PropertiesAdmin() {

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 const seedData = require("../lib/seed/data.json");
 
 const MONGODB_URI =
@@ -7,6 +8,7 @@ const MONGODB_URI =
 const TARGET_COLLECTIONS = [
   "projects",
   "properties",
+  "locations",
   "blogposts",
   "testimonials",
   "partners",
@@ -17,6 +19,15 @@ function prepareDocument(source, now) {
   document.createdAt = source.createdAt ? new Date(source.createdAt) : now;
   document.updatedAt = now;
   return document;
+}
+
+function makeSlug(input) {
+  return slugify(input || "", {
+    lower: true,
+    strict: true,
+    locale: "fr",
+    trim: true,
+  }).slice(0, 90);
 }
 
 async function replaceFixtures(db, collectionName, fixtures, identityKey, now) {
@@ -34,8 +45,46 @@ async function replaceFixtures(db, collectionName, fixtures, identityKey, now) {
   console.log(`Upserted ${collectionName}:`, fixtures.length);
 }
 
-async function seedProjects(db, now) {
-  await replaceFixtures(db, "projects", seedData.projects, "slug", now);
+async function seedLocations(db, now) {
+  const names = Array.from(
+    new Set(
+      [...seedData.projects, ...seedData.properties]
+        .map((item) => item.location)
+        .filter(Boolean)
+    )
+  );
+
+  for (const [index, name] of names.entries()) {
+    await db.collection("locations").replaceOne(
+      { slug: makeSlug(name) },
+      {
+        name,
+        slug: makeSlug(name),
+        active: true,
+        sortOrder: index + 1,
+        createdAt: now,
+        updatedAt: now,
+      },
+      { upsert: true }
+    );
+  }
+
+  const docs = await db
+    .collection("locations")
+    .find({ slug: { $in: names.map(makeSlug) } })
+    .project({ slug: 1, name: 1 })
+    .toArray();
+
+  console.log("Upserted locations:", names.length);
+  return new Map(docs.map((location) => [location.name, location._id]));
+}
+
+async function seedProjects(db, locationIds, now) {
+  const fixtures = seedData.projects.map((project) => ({
+    ...project,
+    locationId: locationIds.get(project.location),
+  }));
+  await replaceFixtures(db, "projects", fixtures, "slug", now);
 
   const projects = await db
     .collection("projects")
@@ -46,12 +95,15 @@ async function seedProjects(db, now) {
   return new Map(projects.map((project) => [project.slug, project._id]));
 }
 
-async function seedProperties(db, projectIds, now) {
+async function seedProperties(db, projectIds, locationIds, now) {
   const collection = db.collection("properties");
 
   for (const fixture of seedData.properties) {
     const { projectSlug, ...fields } = fixture;
     const document = prepareDocument(fields, now);
+    document.intent = fields.intent || "sale";
+    document.showPrice = fields.showPrice || false;
+    document.locationId = locationIds.get(fields.location);
 
     if (projectSlug && projectIds.has(projectSlug)) {
       document.projectId = projectIds.get(projectSlug);
@@ -109,8 +161,9 @@ async function run() {
     }
 
     const now = new Date();
-    const projectIds = await seedProjects(db, now);
-    await seedProperties(db, projectIds, now);
+    const locationIds = await seedLocations(db, now);
+    const projectIds = await seedProjects(db, locationIds, now);
+    await seedProperties(db, projectIds, locationIds, now);
     await replaceFixtures(
       db,
       "blogposts",

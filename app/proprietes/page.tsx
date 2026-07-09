@@ -4,6 +4,7 @@ import PropertyCard from "@/components/PropertyCard";
 import HeroSearch from "@/components/HeroSearch";
 import SortSelect from "@/components/SortSelect";
 import { searchProperties } from "@/lib/actions/properties";
+import { listActiveLocations } from "@/lib/actions/locations";
 
 export const metadata = {
   title: "Acheter — Catalogue de biens",
@@ -14,8 +15,18 @@ export const metadata = {
 
 export default async function PropertiesPage(props: any) {
   const sp: Record<string, any> = (await props.searchParams) || {};
+  const intent = sp.intent === "rent" ? "rent" : "sale";
+  const locationsParam =
+    typeof sp.locations === "string"
+      ? sp.locations.split(",").map((value: string) => value.trim()).filter(Boolean)
+      : Array.isArray(sp.locations)
+        ? sp.locations.flatMap((value: string) => value.split(",")).map((value: string) => value.trim()).filter(Boolean)
+        : undefined;
 
   const filters = {
+    intent,
+    location: sp.location || undefined,
+    locations: locationsParam,
     query: sp.query || undefined,
     type: sp.type || undefined,
     rooms: sp.rooms ? parseInt(sp.rooms, 10) : undefined,
@@ -26,7 +37,12 @@ export default async function PropertiesPage(props: any) {
     limit: sp.limit ? parseInt(sp.limit, 10) : 12,
   };
 
-  const { results, total } = await searchProperties(filters as any);
+  const [locations, searchResult] = await Promise.all([
+    listActiveLocations(),
+    searchProperties(filters as any),
+  ]);
+  const { results, total } = searchResult;
+  const isRent = intent === "rent";
 
   return (
     <>
@@ -34,7 +50,7 @@ export default async function PropertiesPage(props: any) {
 
       <main className="pt-20">
         {/* Hero */}
-        <section className="relative isolate overflow-hidden bg-[var(--color-navy-950)] text-white">
+        <section className="relative isolate z-20 overflow-visible bg-[var(--color-navy-950)] text-white">
           {/* Decorative gold glow — purely cosmetic, no layout impact */}
           <div
             aria-hidden
@@ -49,7 +65,7 @@ export default async function PropertiesPage(props: any) {
               Catalogue
             </span>
             <h1 className="heading-display mt-4 max-w-3xl text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
-              Trouvez le bien qui vous correspond.
+              {isRent ? "Trouvez un bien à louer." : "Trouvez le bien qui vous correspond."}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
               Explorez tous les appartements et locaux signés IBM Immobilière,
@@ -62,7 +78,7 @@ export default async function PropertiesPage(props: any) {
               bien{total > 1 ? "s" : ""} disponible{total > 1 ? "s" : ""}
             </p>
             <div className="mt-10 max-w-4xl">
-              <HeroSearch />
+              <HeroSearch locations={locations} />
             </div>
           </div>
         </section>

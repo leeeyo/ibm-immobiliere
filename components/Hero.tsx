@@ -4,6 +4,7 @@ import HeroBackdrop from "@/components/HeroBackdrop";
 import HeroSearch from "@/components/HeroSearch";
 import Marquee from "@/components/Marquee";
 import { SITE, CONTACT } from "@/lib/constants/site";
+import { listActiveLocations } from "@/lib/actions/locations";
 import { getWebsiteSettings } from "@/lib/website-settings";
 
 const LOCATIONS = [
@@ -22,14 +23,17 @@ const LOCATIONS = [
  * Desktop (lg+): full-viewport centered column.
  */
 export default async function Hero() {
-  const settings = await getWebsiteSettings();
-  const yearsOfExperience = settings.yearsOfExperience || SITE.yearsOfExperience;
-  const residencesDelivered = settings.residencesDelivered || SITE.residencesDelivered;
+  const [settings, searchLocations] = await Promise.all([
+    getWebsiteSettings(),
+    listActiveLocations(),
+  ]);
+  const yearsOfExperience = Math.max(settings.yearsOfExperience || SITE.yearsOfExperience, 17);
+  const residencesDelivered = Math.max(settings.residencesDelivered || SITE.residencesDelivered, 12);
   const hours = settings.hours || CONTACT.hours;
 
   return (
     <section
-      className="relative isolate flex min-h-[100svh] w-full min-w-0 flex-col overflow-hidden bg-[var(--color-navy-950)] text-white supports-[height:100dvh]:min-h-[100dvh] lg:h-[100svh] lg:max-h-[100svh] lg:min-h-0 supports-[height:100dvh]:lg:h-[100dvh] supports-[height:100dvh]:lg:max-h-[100dvh]"
+      className="relative isolate z-20 flex min-h-[100svh] w-full min-w-0 flex-col overflow-visible bg-[var(--color-navy-950)] text-white supports-[height:100dvh]:min-h-[100dvh] lg:h-[100svh] lg:max-h-[100svh] lg:min-h-0 supports-[height:100dvh]:lg:h-[100dvh] supports-[height:100dvh]:lg:max-h-[100dvh]"
       aria-label="Présentation IBM Immobilière"
     >
       <HeroBackdrop />
@@ -52,7 +56,7 @@ export default async function Hero() {
               {yearsOfExperience} ans
             </span>
             <span className="h-2.5 w-px bg-white/25" aria-hidden />
-            <span>{residencesDelivered}+ résidences livrées</span>
+            <span>{residencesDelivered}+ projets livrés</span>
             <span className="h-2.5 w-px bg-white/25" aria-hidden />
             <span className="inline-flex items-center gap-1.5">
               <MapPin className="h-3 w-3 text-[var(--color-gold-300)]" aria-hidden />
@@ -79,7 +83,7 @@ export default async function Hero() {
       </div>
 
       {/* ─── Desktop (lg+) — main column ─── */}
-      <div className="container-page relative z-10 hidden min-h-0 min-w-0 flex-1 flex-col justify-start pt-3 pb-2 sm:pt-6 sm:pb-4 lg:flex lg:flex-col lg:justify-center lg:pt-8 lg:pb-10">
+      <div className="container-page relative z-30 hidden min-h-0 min-w-0 flex-1 flex-col justify-start pt-3 pb-2 sm:pt-6 sm:pb-4 lg:flex lg:flex-col lg:justify-center lg:pt-8 lg:pb-10">
         <div className="min-w-0 w-full max-w-none text-left text-balance lg:mx-auto lg:max-w-3xl lg:text-center">
           <span className="caption line-rise block !text-[var(--color-gold-300)] lg:inline-block">
             Promoteur · Architecte · Tunis
@@ -97,8 +101,8 @@ export default async function Hero() {
             Visitez avant de signer.
           </p>
 
-          <div className="line-rise delay-3 mt-5 min-w-0 w-full max-w-none sm:mt-6 xl:mt-7">
-            <HeroSearch compact />
+          <div className="line-rise delay-3 relative z-40 mt-5 min-w-0 w-full max-w-none sm:mt-6 xl:mt-7">
+            <HeroSearch compact locations={searchLocations} />
           </div>
 
           <ul className="line-rise delay-4 mt-5 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[10px] uppercase tracking-[0.16em] text-white/70 sm:mt-6 sm:text-[11px] sm:tracking-[0.18em]">
@@ -109,7 +113,7 @@ export default async function Hero() {
             <li className="hidden h-3 w-px shrink-0 bg-white/25 sm:block" aria-hidden />
             <li className="inline-flex items-center gap-2">
               <span className="h-1 w-1 shrink-0 rounded-full bg-[var(--color-gold-400)]" aria-hidden />
-              {residencesDelivered}+ résidences livrées
+              {residencesDelivered}+ projets livrés
             </li>
             <li className="hidden h-3 w-px shrink-0 bg-white/25 sm:block" aria-hidden />
             <li className="inline-flex items-center gap-2">

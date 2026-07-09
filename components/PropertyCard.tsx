@@ -8,14 +8,17 @@ interface PropertyCardProps {
   slug?: string;
   title: string;
   price: number;
+  showPrice?: boolean;
+  pricePeriod?: "month" | "week" | "day";
   location: string;
+  intent?: "sale" | "rent";
   type: "residential" | "commercial";
   rooms?: number;
   bathrooms?: number;
   area: number;
   images?: string[];
   image?: string[];
-  status: "available" | "sold" | "reserved";
+  status: "available" | "sold" | "reserved" | "rented";
 }
 
 const STATUS_META: Record<
@@ -25,13 +28,24 @@ const STATUS_META: Record<
   available: { label: "Disponible", cls: "chip-success" },
   reserved: { label: "Réservé", cls: "chip-gold" },
   sold: { label: "Vendu", cls: "chip-danger" },
+  rented: { label: "Loué", cls: "chip-danger" },
+};
+
+const PERIOD_LABEL: Record<"month" | "week" | "day", string> = {
+  month: "mois",
+  week: "semaine",
+  day: "jour",
 };
 
 export default function PropertyCard({
   id,
   slug,
   title,
+  price,
+  showPrice,
+  pricePeriod,
   location,
+  intent = "sale",
   type,
   rooms,
   bathrooms,
@@ -77,6 +91,13 @@ export default function PropertyCard({
         <h3 className="mt-2 font-display text-xl text-[var(--color-navy-900)] line-clamp-1">
           {title}
         </h3>
+
+        {showPrice ? (
+          <p className="mt-3 font-display text-lg text-[var(--color-navy-900)]">
+            {Number(price).toLocaleString("fr-TN")} DT
+            {intent === "rent" ? `/${PERIOD_LABEL[pricePeriod || "month"]}` : ""}
+          </p>
+        ) : null}
 
         <div className="mt-4 flex items-center gap-4 text-sm text-[var(--color-stone-600)]">
           {rooms ? (

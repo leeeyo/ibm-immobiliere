@@ -7,22 +7,29 @@ import ImageUploader from "@/components/admin/ImageUploader";
 import VideoUrlInput from "@/components/admin/VideoUrlInput";
 import PdfUpload from "@/components/admin/PdfUpload";
 import { createProperty, updateProperty } from "@/lib/actions/properties";
-import type { PropertyType } from "@/lib/types";
+import type { LocationType, PropertyType } from "@/lib/types";
 
 type Mode = { kind: "create" } | { kind: "edit"; property: PropertyType };
 
 export default function PropertyForm({
   mode,
   projects,
+  locations,
 }: {
   mode: Mode;
   projects: { id: string; name: string }[];
+  locations: LocationType[];
 }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
   const initial = mode.kind === "edit" ? mode.property : null;
+  const [intent, setIntent] = useState<"sale" | "rent">(initial?.intent || "sale");
+  const initialLocationId =
+    initial?.locationId ||
+    locations.find((location) => location.name.toLowerCase() === initial?.location?.toLowerCase())?.id ||
+    "";
 
   const onSubmit = async (formData: FormData) => {
     setError(null);
@@ -43,7 +50,11 @@ export default function PropertyForm({
       description: String(formData.get("description") || "").trim(),
       reference: String(formData.get("reference") || "").trim() || undefined,
       price: Number(formData.get("price")),
-      location: String(formData.get("location") || "").trim(),
+      showPrice: formData.get("showPrice") === "on",
+      pricePeriod: String(formData.get("pricePeriod") || "month") as "month" | "week" | "day",
+      location: "",
+      locationId: String(formData.get("locationId") || ""),
+      intent: String(formData.get("intent") || "sale") as "sale" | "rent",
       type: String(formData.get("type") || "residential") as "residential" | "commercial",
       rooms: formData.get("rooms") ? Number(formData.get("rooms")) : undefined,
       bathrooms: formData.get("bathrooms") ? Number(formData.get("bathrooms")) : undefined,
@@ -54,12 +65,12 @@ export default function PropertyForm({
       images,
       videos,
       features: featuresRaw ? featuresRaw.split(/\r?\n|,/).map((s) => s.trim()).filter(Boolean) : [],
-      status: String(formData.get("status") || "available") as "available" | "sold" | "reserved",
+      status: String(formData.get("status") || "available") as "available" | "sold" | "reserved" | "rented",
       featured: formData.get("featured") === "on",
       projectId: String(formData.get("projectId") || "") || null,
     };
 
-    if (!input.title || !input.description || !input.location || !input.price || !input.area) {
+    if (!input.title || !input.description || !input.locationId || !input.price || !input.area) {
       setError("Merci de renseigner les champs obligatoires.");
       return;
     }
@@ -115,6 +126,17 @@ export default function PropertyForm({
               <option value="commercial">Commercial</option>
             </select>
           </Field>
+          <Field label="Transaction *" required>
+            <select
+              name="intent"
+              value={intent}
+              onChange={(e) => setIntent(e.target.value as "sale" | "rent")}
+              className={inputCls}
+            >
+              <option value="sale">Achat</option>
+              <option value="rent">Location</option>
+            </select>
+          </Field>
           <Field span={3} label="Description *" required>
             <textarea
               name="description"
@@ -132,14 +154,14 @@ export default function PropertyForm({
       <Card title="Caractéristiques">
         <Grid>
           <Field label="Localisation *" required>
-            <input
-              type="text"
-              name="location"
-              required
-              defaultValue={initial?.location}
-              placeholder="Riadh el Andalous, Ariana"
-              className={inputCls}
-            />
+            <select name="locationId" required defaultValue={initialLocationId} className={inputCls}>
+              <option value="">Choisir une localisation</option>
+              {locations.map((location) => (
+                <option key={location.id} value={location.id}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
           </Field>
           <Field label="Prix (DT) *" required>
             <input
@@ -152,6 +174,17 @@ export default function PropertyForm({
               className={inputCls}
             />
           </Field>
+          {intent === "rent" ? (
+            <Field label="Période du loyer">
+              <select name="pricePeriod" defaultValue={initial?.pricePeriod || "month"} className={inputCls}>
+                <option value="month">Par mois</option>
+                <option value="week">Par semaine</option>
+                <option value="day">Par jour</option>
+              </select>
+            </Field>
+          ) : (
+            <input type="hidden" name="pricePeriod" value="month" />
+          )}
           <Field label="Surface (m²) *" required>
             <input
               type="number"
@@ -225,7 +258,7 @@ export default function PropertyForm({
             <select name="status" defaultValue={initial?.status || "available"} className={inputCls}>
               <option value="available">Disponible</option>
               <option value="reserved">Réservé</option>
-              <option value="sold">Vendu</option>
+              {intent === "rent" ? <option value="rented">Loué</option> : <option value="sold">Vendu</option>}
             </select>
           </Field>
           <Field span={3}>
@@ -237,6 +270,17 @@ export default function PropertyForm({
                 className="h-4 w-4 rounded border-[var(--color-stone-300)] text-[var(--color-navy-900)] focus:ring-[var(--color-gold-500)]"
               />
               Mettre en avant sur la page d&apos;accueil
+            </label>
+          </Field>
+          <Field span={3}>
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                name="showPrice"
+                defaultChecked={initial?.showPrice}
+                className="h-4 w-4 rounded border-[var(--color-stone-300)]"
+              />
+              Afficher le prix sur le site
             </label>
           </Field>
           {mode.kind === "edit" ? (

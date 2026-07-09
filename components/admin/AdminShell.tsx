@@ -10,6 +10,7 @@ import {
   Inbox,
   Building2,
   Home,
+  MapPin,
   Settings,
   LogOut,
   Menu,
@@ -24,6 +25,7 @@ const NAV = [
   { href: "/admin/leads", label: "Demandes", icon: Inbox },
   { href: "/admin/properties", label: "Biens", icon: Home },
   { href: "/admin/projects", label: "Projets", icon: Building2 },
+  { href: "/admin/locations", label: "Localisations", icon: MapPin },
   { href: "/admin/meta", label: "Tracking", icon: Activity },
   { href: "/admin/settings", label: "Site web", icon: Settings },
 ];

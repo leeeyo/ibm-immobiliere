@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { connectDB } from "@/lib/db/mongodb";
 import { Project } from "@/lib/models/Project";
 import { Property } from "@/lib/models/Property";
+import { Location } from "@/lib/models/Location";
 import { serializeDoc } from "@/lib/utils/serialize";
 import { uniqueSlug } from "@/lib/utils/slug";
 import { requireAdmin } from "@/lib/auth/session";
@@ -89,6 +90,7 @@ export type ProjectInput = {
   name: string;
   description: string;
   location: string;
+  locationId?: string;
   yearCompleted: number;
   status: "planned" | "ongoing" | "completed";
   type: "residential" | "commercial";
@@ -98,6 +100,16 @@ export type ProjectInput = {
   featured?: boolean;
   units?: ProjectUnitType[];
 };
+
+async function resolveLocationFields(locationId?: string | null) {
+  if (!locationId || !mongoose.Types.ObjectId.isValid(locationId)) return null;
+  const location = await Location.findById(locationId).lean().exec();
+  if (!location) return null;
+  return {
+    locationId: (location as any)._id,
+    location: (location as any).name,
+  };
+}
 
 export async function listAllProjects(): Promise<ProjectType[]> {
   await requireAdmin();
@@ -132,7 +144,9 @@ export async function createProject(
   await connectDB();
   try {
     const slug = await uniqueSlug(input.name, async (s) => Boolean(await Project.exists({ slug: s })));
-    const doc = await Project.create({ ...input, slug });
+    const locationFields = await resolveLocationFields(input.locationId);
+    if (!locationFields) return { success: false, error: "Localisation invalide" };
+    const doc = await Project.create({ ...input, ...locationFields, slug });
     revalidatePath("/admin/projects");
     revalidatePath("/projets");
     return { success: true, id: String(doc._id), slug };
@@ -152,6 +166,12 @@ export async function updateProject(
   try {
     const update: any = { ...input };
     delete update.regenerateSlug;
+    if (input.locationId !== undefined) {
+      const locationFields = await resolveLocationFields(input.locationId);
+      if (!locationFields) return { success: false, error: "Localisation invalide" };
+      update.locationId = locationFields.locationId;
+      update.location = locationFields.location;
+    }
     if (input.regenerateSlug && input.name) {
       update.slug = await uniqueSlug(input.name, async (s) =>
         Boolean(await Project.exists({ slug: s, _id: { $ne: id } }))

@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import mongoose, { Schema, model, models } from 'mongoose';
 
 export interface IProjectUnit {
   numero: string;
@@ -15,6 +15,7 @@ export interface IProject {
   slug: string;
   description: string;
   location: string;
+  locationId?: mongoose.Types.ObjectId;
   yearCompleted: number;
   status: 'planned' | 'ongoing' | 'completed';
   images: string[];
@@ -48,6 +49,7 @@ const ProjectSchema = new Schema<IProject>(
     slug: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     location: { type: String, required: true },
+    locationId: { type: Schema.Types.ObjectId, ref: "Location", default: null, index: true },
     yearCompleted: { type: Number, required: true },
     status: { type: String, enum: ['planned', 'ongoing', 'completed'], required: true },
     images: [{ type: String, default: [] }],
