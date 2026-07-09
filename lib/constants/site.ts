@@ -7,7 +7,7 @@ export const SITE = {
     "Promoteur immobilier expert. Nous réalisons des projets d'exception pour bâtir votre avenir en toute confiance.",
   url: "https://www.ibm-immobiliere.tn",
   yearsOfExperience: 17,
-  residencesDelivered: 6,
+  residencesDelivered: 12,
 } as const;
 
 export const CONTACT = {

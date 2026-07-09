@@ -8,6 +8,7 @@ import {
   NAV_FOOTER_SEO_TYPES,
 } from "@/lib/constants/nav";
 import { getWebsiteSettings } from "@/lib/website-settings";
+import { BMGroupFooterBadge } from "@/components/BMGroupFooterBadge";
 
 export default async function Footer() {
   const year = new Date().getFullYear();
@@ -54,6 +55,8 @@ export default async function Footer() {
               <SocialLink href={social.instagram} label="Instagram"><Instagram className="h-4 w-4" /></SocialLink>
               <SocialLink href={social.linkedin} label="LinkedIn"><Linkedin className="h-4 w-4" /></SocialLink>
             </div>
+
+            <BMGroupFooterBadge />
           </div>
 
           {/* Col 2 — Accès rapide */}

@@ -16,6 +16,7 @@ import {
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BMGroupGateway } from "@/components/BMGroupGateway";
 import PropertyCard from "@/components/PropertyCard";
 import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
@@ -188,14 +189,19 @@ export default async function HomePage() {
             CATALOGUE — asymmetric gallery wall
             ────────────────────────────────────────────────────────────── */}
         <section className="relative bg-[var(--color-ivory-50)]">
-          <div className="container-page py-12 lg:py-16">
-            <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="max-w-2xl">
+          <div className="container-page py-8 lg:py-12">
+            <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div className="max-w-5xl">
                 <span className="caption">Catalogue</span>
-                <h2 className="mt-4 editorial-hero text-[clamp(2rem,5.5vw,4.5rem)] text-[var(--color-navy-900)]">
-                  Quelques pièces<br />
-                  <em className="!text-[var(--color-gold-600)]">de notre collection.</em>
+                <h2 className="mt-3 font-display text-[clamp(2rem,3.55vw,3.25rem)] leading-[1] text-[var(--color-navy-900)]">
+                  Nos appartements disponibles
+                  <span className="block font-normal italic text-[var(--color-gold-600)]">
+                    appartements d'exception.
+                  </span>
                 </h2>
+                <p className="mt-3 max-w-xl text-sm text-[var(--color-stone-600)] sm:text-base">
+                  Trouvez l'appartement qui vous ressemble.
+                </p>
               </div>
               <Link href="/proprietes" className="link-underline shrink-0 text-base">
                 Tout le catalogue
@@ -204,7 +210,7 @@ export default async function HomePage() {
             </Reveal>
 
             {properties.length > 0 ? (
-              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-12 lg:gap-7">
+              <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-12 lg:gap-6">
                 {/* Tall feature */}
                 {properties[0] ? (
                   <Reveal className="lg:col-span-5 lg:row-span-2">
@@ -299,7 +305,7 @@ export default async function HomePage() {
             ────────────────────────────────────────────────────────────── */}
         <section className="relative bg-[var(--color-ivory-50)]">
           <div className="container-page py-10 lg:py-14">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10 md:gap-y-0 divide-y md:divide-y-0 md:divide-x divide-[var(--color-stone-200)]">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-y-10 md:gap-y-0 divide-y md:divide-y-0 md:divide-x divide-[var(--color-stone-200)]">
               <Reveal className="md:pr-8">
                 <span className="caption">En chiffres</span>
                 <h3 className="mt-3 font-display text-2xl text-[var(--color-navy-900)] leading-snug">
@@ -310,9 +316,10 @@ export default async function HomePage() {
               </Reveal>
 
               {[
-                { v: settings.yearsOfExperience, suffix: "", label: "Années d'engagement" },
-                { v: settings.residencesDelivered, suffix: "", label: "Résidences livrées" },
-                { v: 100, suffix: "%", label: "Clients satisfaits" },
+                { v: Math.max(settings.yearsOfExperience, 17), suffix: "", label: "Années d'engagement" },
+                { v: Math.max(settings.residencesDelivered, 12), suffix: "+", label: "Projets livrés" },
+                { v: 250, suffix: "+", label: "Appartements conçus" },
+                { v: 250, suffix: "+", label: "Clients accompagnés" },
               ].map((s, i) => (
                 <Reveal key={s.label} delay={(i + 1) * 100} className="md:px-8 md:py-2 pt-10 md:pt-0">
                   <AnimatedCounter
@@ -360,6 +367,8 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        <BMGroupGateway />
 
         {/* ──────────────────────────────────────────────────────────────
             INVITATION CTA — letter / RSVP card
@@ -479,7 +488,7 @@ function PropertyCardFeature(p: any) {
   return (
     <Link
       href={href}
-      className="group relative block h-full min-h-[26rem] overflow-hidden rounded-3xl bg-[var(--color-navy-900)] text-white"
+      className="group relative block h-full min-h-[22rem] overflow-hidden rounded-3xl bg-[var(--color-navy-900)] text-white lg:min-h-[24rem]"
     >
       <Image
         src={cover}
