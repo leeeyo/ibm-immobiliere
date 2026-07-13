@@ -20,13 +20,15 @@ export default function HeroSearch({
   compact = false,
   layout = "default",
   locations = [],
+  initialIntent = "sale",
 }: {
   compact?: boolean;
   layout?: "default" | "heroMobile";
   locations?: LocationType[];
+  initialIntent?: "sale" | "rent";
 }) {
   const router = useRouter();
-  const [intent, setIntent] = useState<"sale" | "rent">("sale");
+  const [intent, setIntent] = useState<"sale" | "rent">(initialIntent);
   const [type, setType] = useState("");
   const [locationSlugs, setLocationSlugs] = useState<string[]>([]);
 
@@ -77,7 +79,8 @@ export default function HeroSearch({
     }
 
     const qs = params.toString();
-    router.push(qs ? `/proprietes?${qs}` : "/proprietes");
+    const pathname = intent === "rent" ? "/louer" : "/proprietes";
+    router.push(qs ? `${pathname}?${qs}` : pathname);
   };
 
   if (isHeroMobile) {

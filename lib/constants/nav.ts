@@ -7,6 +7,7 @@ export type NavItem = {
 export const NAV_PRIMARY: NavItem[] = [
   { href: "/", label: "Accueil" },
   { href: "/proprietes", label: "Acheter" },
+  { href: "/louer", label: "Louer" },
   {
     href: "/projets",
     label: "Projets",
@@ -23,6 +24,7 @@ export const NAV_PRIMARY: NavItem[] = [
 export const NAV_FOOTER_QUICK = [
   { href: "/", label: "Accueil" },
   { href: "/proprietes", label: "Acheter" },
+  { href: "/louer", label: "Louer" },
   { href: "/projets", label: "Nos Projets" },
   { href: "/blog", label: "Actualités" },
   { href: "/contact", label: "Contact" },

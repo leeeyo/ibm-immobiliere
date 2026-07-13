@@ -109,6 +109,7 @@ export async function updateWebsiteSettings(
     "/mentions-legales",
     "/politique-confidentialite",
     "/proprietes",
+    "/louer",
     "/projets",
     "/admin/settings",
   ].forEach((path) => revalidatePath(path));

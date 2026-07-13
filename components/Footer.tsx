@@ -1,18 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Linkedin, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { ArrowUpRight, Facebook, Instagram, Linkedin, MapPin, Phone, Mail, Clock } from "lucide-react";
 import { SITE, CONTACT, SOCIAL } from "@/lib/constants/site";
 import {
   NAV_FOOTER_QUICK,
   NAV_FOOTER_SEO_LOCATIONS,
-  NAV_FOOTER_SEO_TYPES,
 } from "@/lib/constants/nav";
+import { listFooterLocations } from "@/lib/actions/locations";
 import { getWebsiteSettings } from "@/lib/website-settings";
 import { BMGroupFooterBadge } from "@/components/BMGroupFooterBadge";
 
 export default async function Footer() {
   const year = new Date().getFullYear();
-  const settings = await getWebsiteSettings();
+  const [settings, dynamicLocations] = await Promise.all([
+    getWebsiteSettings(),
+    listFooterLocations(4),
+  ]);
   const siteName = settings.siteName || SITE.name;
   const yearsOfExperience = settings.yearsOfExperience || SITE.yearsOfExperience;
   const contact = {
@@ -27,6 +30,16 @@ export default async function Footer() {
     instagram: settings.instagram || SOCIAL.instagram,
     linkedin: settings.linkedin || SOCIAL.linkedin,
   };
+  const footerLocations = dynamicLocations.length > 0
+    ? dynamicLocations.map((location) => ({
+        href: location.href,
+        label: location.name,
+        meta: location.activityLabel,
+      }))
+    : NAV_FOOTER_SEO_LOCATIONS.slice(0, 4).map((location) => ({
+        ...location,
+        meta: "Découvrir",
+      }));
 
   return (
     <footer className="bg-[var(--color-navy-950)] text-white/80">
@@ -73,25 +86,37 @@ export default async function Footer() {
             </ul>
           </div>
 
-          {/* Col 3 — SEO links */}
+          {/* Col 3 — Dynamic locations */}
           <div className="lg:col-span-3">
-            <FooterHeading>Recherches populaires</FooterHeading>
-            <ul className="mt-5 space-y-3 text-sm">
-              {NAV_FOOTER_SEO_LOCATIONS.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-white/70 hover:text-[var(--color-gold-400)] transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-              {NAV_FOOTER_SEO_TYPES.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-white/70 hover:text-[var(--color-gold-400)] transition-colors">
-                    {l.label}
+            <FooterHeading>Nos localisations</FooterHeading>
+            <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/50">
+              Une sélection courte, mise à jour selon nos biens et résidences.
+            </p>
+            <ul className="mt-5 space-y-2">
+              {footerLocations.map((location) => (
+                <li key={location.href}>
+                  <Link
+                    href={location.href}
+                    className="group flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2.5 transition-all hover:border-[var(--color-gold-500)]/45 hover:bg-white/[0.07]"
+                  >
+                    <span className="flex min-w-0 items-center gap-2 text-sm text-white/75 transition-colors group-hover:text-white">
+                      <MapPin className="h-3.5 w-3.5 shrink-0 text-[var(--color-gold-400)]" />
+                      <span className="truncate">{location.label}</span>
+                    </span>
+                    <span className="shrink-0 text-[10px] uppercase tracking-[0.12em] text-white/35 transition-colors group-hover:text-[var(--color-gold-300)]">
+                      {location.meta}
+                    </span>
                   </Link>
                 </li>
               ))}
             </ul>
+            <Link
+              href="/proprietes"
+              className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-gold-400)] transition-colors hover:text-[var(--color-gold-300)]"
+            >
+              Voir toutes les opportunités
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
 
           {/* Col 4 — Contact */}

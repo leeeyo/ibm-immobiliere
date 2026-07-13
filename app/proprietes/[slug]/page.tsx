@@ -98,6 +98,8 @@ export default async function PropertyDetailPage(props: any) {
     getWebsiteSettings(),
   ]);
   const status = STATUS_META[property.status] || STATUS_META.available;
+  const catalogueHref = property.intent === "rent" ? "/louer" : "/proprietes";
+  const catalogueLabel = property.intent === "rent" ? "Louer" : "Acheter";
   const canonicalUrl = `${SITE.url}/proprietes/${property.slug}`;
   const propertyImage = property.images?.[0]
     ? new URL(property.images[0], SITE.url).toString()
@@ -131,7 +133,7 @@ export default async function PropertyDetailPage(props: any) {
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Accueil", item: SITE.url },
-              { "@type": "ListItem", position: 2, name: "Acheter", item: `${SITE.url}/proprietes` },
+              { "@type": "ListItem", position: 2, name: catalogueLabel, item: `${SITE.url}${catalogueHref}` },
               { "@type": "ListItem", position: 3, name: property.title, item: canonicalUrl },
             ],
           },
@@ -148,7 +150,7 @@ export default async function PropertyDetailPage(props: any) {
         <nav className="container-page pt-6 text-xs text-[var(--color-stone-500)] flex items-center gap-1.5">
           <Link href="/" className="hover:text-[var(--color-navy-900)]">Accueil</Link>
           <span>/</span>
-          <Link href="/proprietes" className="hover:text-[var(--color-navy-900)]">Acheter</Link>
+          <Link href={catalogueHref} className="hover:text-[var(--color-navy-900)]">{catalogueLabel}</Link>
           <span>/</span>
           <span className="text-[var(--color-navy-900)] truncate max-w-[60vw]">{property.title}</span>
         </nav>
@@ -308,7 +310,7 @@ export default async function PropertyDetailPage(props: any) {
                   <span className="eyebrow">Continuer la recherche</span>
                   <h2 className="heading-display mt-2 text-2xl sm:text-3xl">Biens similaires</h2>
                 </div>
-                <Link href="/proprietes" className="link-underline">Tout le catalogue</Link>
+                <Link href={catalogueHref} className="link-underline">Tout le catalogue</Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {similar.map((p: any) => (

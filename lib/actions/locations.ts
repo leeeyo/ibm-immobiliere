@@ -18,6 +18,13 @@ export type LocationInput = {
   sortOrder?: number;
 };
 
+export type FooterLocationLink = {
+  name: string;
+  href: string;
+  activityCount: number;
+  activityLabel: string;
+};
+
 function normalizeLocation(doc: any): LocationType {
   return serializeDoc(doc) as LocationType;
 }
@@ -41,6 +48,7 @@ function revalidateLocationPaths() {
   [
     "/",
     "/proprietes",
+    "/louer",
     "/projets",
     "/admin/locations",
     "/admin/properties",
@@ -55,6 +63,163 @@ export async function listActiveLocations(): Promise<LocationType[]> {
     return docs.map(normalizeLocation);
   } catch (e) {
     console.error("listActiveLocations error", e);
+    return [];
+  }
+}
+
+/**
+ * Keeps the footer intentionally short while favouring locations that have
+ * live properties or projects. Legacy records without a locationId are also
+ * counted through their location name.
+ */
+export async function listFooterLocations(limit = 4): Promise<FooterLocationLink[]> {
+  try {
+    await connectDB();
+
+    const safeLimit = Math.min(Math.max(Math.trunc(limit), 1), 6);
+    const locations = await Location.find({ active: true })
+      .sort({ sortOrder: 1, name: 1 })
+      .lean()
+      .exec();
+
+    if (locations.length === 0) return [];
+
+    const locationIds = locations.map((location: any) => location._id);
+    const locationNames = locations.map((location: any) => location.name);
+    const locationQuery = {
+      $or: [
+        { locationId: { $in: locationIds } },
+        { location: { $in: locationNames } },
+      ],
+    };
+
+    const [properties, projects] = await Promise.all([
+      Property.find(
+        {
+          ...locationQuery,
+          status: "available",
+          $and: [
+            {
+              $or: [
+                { intent: "sale" },
+                { intent: { $exists: false } },
+                { intent: null },
+              ],
+            },
+          ],
+        },
+        { locationId: 1, location: 1 },
+      )
+        .lean()
+        .exec(),
+      Project.find(locationQuery, {
+        locationId: 1,
+        location: 1,
+        slug: 1,
+        status: 1,
+        featured: 1,
+      })
+        .lean()
+        .exec(),
+    ]);
+
+    const byId = new Map(locations.map((location: any) => [String(location._id), location.slug]));
+    const byName = new Map(locations.map((location: any) => [location.name, location.slug]));
+    const activity = new Map<
+      string,
+      {
+        propertyCount: number;
+        projectCount: number;
+        ongoingProjectCount: number;
+        projects: Array<{ slug: string; featured: boolean; status: string }>;
+      }
+    >();
+
+    const resolveSlug = (document: any) =>
+      (document.locationId && byId.get(String(document.locationId))) ||
+      byName.get(document.location);
+
+    for (const property of properties as any[]) {
+      const slug = resolveSlug(property);
+      if (!slug) continue;
+      const entry = activity.get(slug) || {
+        propertyCount: 0,
+        projectCount: 0,
+        ongoingProjectCount: 0,
+        projects: [],
+      };
+      entry.propertyCount += 1;
+      activity.set(slug, entry);
+    }
+
+    for (const project of projects as any[]) {
+      const slug = resolveSlug(project);
+      if (!slug) continue;
+      const entry = activity.get(slug) || {
+        propertyCount: 0,
+        projectCount: 0,
+        ongoingProjectCount: 0,
+        projects: [],
+      };
+      entry.projectCount += 1;
+      if (project.status === "ongoing") entry.ongoingProjectCount += 1;
+      if (project.slug) {
+        entry.projects.push({
+          slug: project.slug,
+          featured: Boolean(project.featured),
+          status: project.status,
+        });
+      }
+      activity.set(slug, entry);
+    }
+
+    return locations
+      .map((location: any, index: number) => {
+        const entry = activity.get(location.slug) || {
+          propertyCount: 0,
+          projectCount: 0,
+          ongoingProjectCount: 0,
+          projects: [],
+        };
+        const activityCount = entry.propertyCount + entry.projectCount;
+        const preferredProject = entry.projects.sort((a: any, b: any) => {
+          const aScore = Number(a.featured) * 2 + Number(a.status === "ongoing");
+          const bScore = Number(b.featured) * 2 + Number(b.status === "ongoing");
+          return bScore - aScore;
+        })[0];
+        const href = entry.propertyCount > 0
+          ? `/proprietes?location=${location.slug}`
+          : preferredProject
+            ? `/projets/${preferredProject.slug}`
+            : `/proprietes?location=${location.slug}`;
+        const activityLabel = entry.propertyCount > 0
+          ? `${entry.propertyCount} bien${entry.propertyCount > 1 ? "s" : ""}`
+          : entry.projectCount > 0
+            ? `${entry.projectCount} résidence${entry.projectCount > 1 ? "s" : ""}`
+            : "Découvrir";
+
+        return {
+          name: location.name,
+          href,
+          activityCount,
+          activityLabel,
+          score:
+            entry.propertyCount * 4 +
+            entry.ongoingProjectCount * 3 +
+            entry.projectCount,
+          index,
+        };
+      })
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .slice(0, safeLimit)
+      .map(({ name, href, activityCount, activityLabel }) => ({
+        name,
+        href,
+        activityCount,
+        activityLabel,
+      }));
+  } catch (e) {
+    console.error("listFooterLocations error", e);
     return [];
   }
 }

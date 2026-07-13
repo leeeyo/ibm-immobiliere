@@ -277,6 +277,7 @@ export async function createProperty(
     });
     revalidatePath("/admin/properties");
     revalidatePath("/proprietes");
+    revalidatePath("/louer");
     return { success: true, id: String(doc._id), slug };
   } catch (e: any) {
     console.error("createProperty error", e);
@@ -319,6 +320,7 @@ export async function updateProperty(
     const doc = await Property.findByIdAndUpdate(id, update, { new: true }).lean().exec();
     revalidatePath("/admin/properties");
     revalidatePath("/proprietes");
+    revalidatePath("/louer");
     if ((doc as any)?.slug) revalidatePath(`/proprietes/${(doc as any).slug}`);
     return { success: true, slug: (doc as any)?.slug };
   } catch (e: any) {
@@ -334,5 +336,6 @@ export async function deleteProperty(id: string): Promise<{ success: boolean }> 
   await Property.findByIdAndDelete(id).exec();
   revalidatePath("/admin/properties");
   revalidatePath("/proprietes");
+  revalidatePath("/louer");
   return { success: true };
 }

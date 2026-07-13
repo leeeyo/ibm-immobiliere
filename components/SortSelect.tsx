@@ -1,16 +1,18 @@
 "use client";
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function SortSelect() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
     if (e.target.value) params.set('sort', e.target.value);
     else params.delete('sort');
-    router.push('/proprietes?' + params.toString());
+    const query = params.toString();
+    router.push(query ? `${pathname}?${query}` : pathname);
   };
 
   return (

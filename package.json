@@ -11,6 +11,7 @@
     "seed": "node scripts/seed-standalone.js",
     "seed:fresh": "node scripts/seed-standalone.js --fresh",
     "seed:locations": "node scripts/seed-locations.js",
+    "seed:residences": "node scripts/seed-residences.js",
     "seed:export": "node scripts/export-seed-data.js",
     "favicon": "node scripts/generate-favicon.js",
     "images:optimize": "node scripts/optimize-public-images.js",
