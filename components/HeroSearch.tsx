@@ -21,18 +21,28 @@ export default function HeroSearch({
   layout = "default",
   locations = [],
   initialIntent = "sale",
+  saleOnly = false,
 }: {
   compact?: boolean;
   layout?: "default" | "heroMobile";
   locations?: LocationType[];
   initialIntent?: "sale" | "rent";
+  saleOnly?: boolean;
 }) {
   const router = useRouter();
   const [intent, setIntent] = useState<"sale" | "rent">(initialIntent);
-  const [type, setType] = useState("");
+  const [type, setType] = useState(initialIntent === "rent" ? "commercial" : "");
   const [locationSlugs, setLocationSlugs] = useState<string[]>([]);
 
   const isHeroMobile = layout === "heroMobile";
+  const propertyTypes = intent === "rent"
+    ? [{ value: "commercial", label: "Boutique" }]
+    : PROPERTY_TYPES;
+
+  const changeIntent = (nextIntent: "sale" | "rent") => {
+    setIntent(nextIntent);
+    if (nextIntent === "rent") setType("commercial");
+  };
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,15 +110,15 @@ export default function HeroSearch({
 
         <div className="divide-y divide-[var(--color-stone-200)] bg-[var(--color-stone-50)]">
           <FieldMobileHero label="Transaction" hint="Acheter ou louer" icon={<Search className="h-4 w-4 shrink-0 text-[var(--color-gold-600)]" />}>
-            <select value={intent} onChange={(e) => setIntent(e.target.value as "sale" | "rent")} className={mobileSelectCls}>
+            <select value={intent} onChange={(e) => changeIntent(e.target.value as "sale" | "rent")} className={mobileSelectCls}>
               <option value="sale">Acheter</option>
-              <option value="rent">Louer</option>
+              {!saleOnly ? <option value="rent">Louer</option> : null}
             </select>
           </FieldMobileHero>
 
           <FieldMobileHero label="Type" hint="Nature du bien" icon={<Building2 className="h-4 w-4 shrink-0 text-[var(--color-gold-600)]" />}>
             <select value={type} onChange={(e) => setType(e.target.value)} className={mobileSelectCls}>
-              {PROPERTY_TYPES.map((p) => (
+              {propertyTypes.map((p) => (
                 <option key={p.value} value={p.value}>
                   {p.label}
                 </option>
@@ -148,15 +158,15 @@ export default function HeroSearch({
     >
       <div className="grid min-w-0 w-full grid-cols-1 md:grid-cols-[0.85fr_1fr_1fr_auto] gap-0 md:gap-px bg-[var(--color-stone-100)]">
         <Field compact={compact} label="Transaction" icon={<Search className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}>
-          <select value={intent} onChange={(e) => setIntent(e.target.value as "sale" | "rent")} className={selectCls(compact)}>
+          <select value={intent} onChange={(e) => changeIntent(e.target.value as "sale" | "rent")} className={selectCls(compact)}>
             <option value="sale">Acheter</option>
-            <option value="rent">Louer</option>
+            {!saleOnly ? <option value="rent">Louer</option> : null}
           </select>
         </Field>
 
         <Field compact={compact} label="Type de bien" icon={<Building2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}>
           <select value={type} onChange={(e) => setType(e.target.value)} className={selectCls(compact)}>
-            {PROPERTY_TYPES.map((p) => (
+            {propertyTypes.map((p) => (
               <option key={p.value} value={p.value}>
                 {p.label}
               </option>

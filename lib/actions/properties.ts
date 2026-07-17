@@ -20,6 +20,7 @@ function addIntentFilter(query: any, intent?: "sale" | "rent") {
     return;
   }
   query.intent = "rent";
+  query.type = "commercial";
 }
 
 async function addLocationFilter(query: any, filters: SearchFilters) {
@@ -259,6 +260,9 @@ export async function createProperty(
   await requireAdmin();
   await connectDB();
   try {
+    if (input.intent === "rent" && input.type !== "commercial") {
+      return { success: false, error: "La location est réservée aux boutiques." };
+    }
     const slug = await uniqueSlug(input.title, async (s) => Boolean(await Property.exists({ slug: s })));
     const locationFields = await resolveLocationFields(input.locationId);
     if (!locationFields) return { success: false, error: "Localisation invalide" };
@@ -293,6 +297,13 @@ export async function updateProperty(
   await connectDB();
   if (!mongoose.Types.ObjectId.isValid(id)) return { success: false, error: "ID invalide" };
   try {
+    const existing = await Property.findById(id, { intent: 1, type: 1 }).lean().exec();
+    if (!existing) return { success: false, error: "Bien introuvable" };
+    const nextIntent = input.intent ?? (existing as any).intent ?? "sale";
+    const nextType = input.type ?? (existing as any).type;
+    if (nextIntent === "rent" && nextType !== "commercial") {
+      return { success: false, error: "La location est réservée aux boutiques." };
+    }
     const update: any = { ...input };
     delete update.regenerateSlug;
     if (input.locationId !== undefined) {

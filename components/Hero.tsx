@@ -102,7 +102,7 @@ export default async function Hero() {
           </p>
 
           <div className="line-rise delay-3 relative z-40 mt-5 min-w-0 w-full max-w-none sm:mt-6 xl:mt-7">
-            <HeroSearch compact locations={searchLocations} />
+            <HeroSearch compact locations={searchLocations} saleOnly />
           </div>
 
           <ul className="line-rise delay-4 mt-5 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[10px] uppercase tracking-[0.16em] text-white/70 sm:mt-6 sm:text-[11px] sm:tracking-[0.18em]">

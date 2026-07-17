@@ -6,21 +6,12 @@ const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/ibm-immobiliere";
 
 const LOCATIONS = [
-  "Tunis Centre",
-  "Les Berges du Lac 1, Tunis",
-  "Les Berges du Lac 2, Tunis",
-  "Ain Zaghouan Nord, Tunis",
-  "Ain Zaghouan Sud, Tunis",
-  "Jardins de Carthage, Tunis",
-  "La Marsa, Tunis",
-  "Gammarth, Tunis",
-  "Carthage, Tunis",
-  "Le Kram, Tunis",
-  "La Goulette, Tunis",
-  "Mutuelleville, Tunis",
-  "El Menzah, Tunis",
-  "El Manar, Tunis",
-  "Mrezga, Nabeul",
+  "Riadh el Andalous",
+  "Boumhel",
+  "Mghira",
+  "Borj cedria",
+  "Mrezga",
+  "L'Aaouina",
 ];
 
 function makeSlug(input) {

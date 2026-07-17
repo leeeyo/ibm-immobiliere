@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import PropertyCataloguePage from "@/components/PropertyCataloguePage";
 
 export const metadata: Metadata = {
-  title: "Louer — Appartements et locaux en Tunisie",
+  title: "Louer une boutique en Tunisie",
   description:
-    "Découvrez les appartements, bureaux et commerces à louer proposés par IBM Immobilière en Tunisie.",
+    "Découvrez les boutiques à louer proposées par IBM Immobilière en Tunisie.",
   alternates: { canonical: "/louer" },
 };
 

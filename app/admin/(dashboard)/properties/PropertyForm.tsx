@@ -26,6 +26,9 @@ export default function PropertyForm({
 
   const initial = mode.kind === "edit" ? mode.property : null;
   const [intent, setIntent] = useState<"sale" | "rent">(initial?.intent || "sale");
+  const [type, setType] = useState<"residential" | "commercial">(
+    initial?.intent === "rent" ? "commercial" : initial?.type || "residential",
+  );
   const initialLocationId =
     initial?.locationId ||
     locations.find((location) => location.name.toLowerCase() === initial?.location?.toLowerCase())?.id ||
@@ -121,16 +124,27 @@ export default function PropertyForm({
             />
           </Field>
           <Field label="Type *" required>
-            <select name="type" defaultValue={initial?.type || "residential"} className={inputCls}>
+            <select
+              name="type"
+              value={type}
+              disabled={intent === "rent"}
+              onChange={(e) => setType(e.target.value as "residential" | "commercial")}
+              className={inputCls}
+            >
               <option value="residential">Résidentiel</option>
-              <option value="commercial">Commercial</option>
+              <option value="commercial">{intent === "rent" ? "Boutique" : "Commercial"}</option>
             </select>
+            {intent === "rent" ? <input type="hidden" name="type" value="commercial" /> : null}
           </Field>
           <Field label="Transaction *" required>
             <select
               name="intent"
               value={intent}
-              onChange={(e) => setIntent(e.target.value as "sale" | "rent")}
+              onChange={(e) => {
+                const nextIntent = e.target.value as "sale" | "rent";
+                setIntent(nextIntent);
+                if (nextIntent === "rent") setType("commercial");
+              }}
               className={inputCls}
             >
               <option value="sale">Achat</option>

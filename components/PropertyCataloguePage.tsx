@@ -31,7 +31,7 @@ export default async function PropertyCataloguePage({
     location: sp.location || undefined,
     locations: locationsParam,
     query: sp.query || undefined,
-    type: sp.type || undefined,
+    type: intent === "rent" ? "commercial" : sp.type || undefined,
     rooms: sp.rooms ? parseInt(sp.rooms, 10) : undefined,
     minPrice: sp.minPrice ? parseInt(sp.minPrice, 10) : undefined,
     maxPrice: sp.maxPrice ? parseInt(sp.maxPrice, 10) : undefined,
@@ -69,18 +69,18 @@ export default async function PropertyCataloguePage({
             </span>
             <h1 className="heading-display mt-4 max-w-3xl text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
               {isRent
-                ? "Trouvez un bien à louer, en toute sérénité."
+                ? "Trouvez une boutique à louer, en toute sérénité."
                 : "Trouvez le bien qui vous correspond."}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
               {isRent
-                ? "Explorez nos appartements et locaux disponibles à la location. Affinez votre recherche par type, surface et localisation."
+                ? "Explorez nos boutiques disponibles à la location. Affinez votre recherche par surface et localisation."
                 : "Explorez tous les appartements et locaux signés IBM Immobilière, disponibles à la vente. Affinez votre recherche par type, surface et localisation."}
             </p>
             <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-gold-400)]" />
               <span className="font-semibold text-white">{total}</span>
-              bien{total > 1 ? "s" : ""} disponible{total > 1 ? "s" : ""}
+              {isRent ? `boutique${total > 1 ? "s" : ""}` : `bien${total > 1 ? "s" : ""}`} disponible{total > 1 ? "s" : ""}
               {isRent ? " à la location" : " à la vente"}
             </p>
             <div className="mt-10 max-w-4xl">
@@ -94,7 +94,9 @@ export default async function PropertyCataloguePage({
             <div className="mb-8 flex items-center justify-between gap-4">
               <p className="text-sm text-[var(--color-stone-600)]">
                 <span className="font-semibold text-[var(--color-navy-900)]">{total}</span>{" "}
-                bien{total > 1 ? "s" : ""} trouvé{total > 1 ? "s" : ""}
+                {isRent
+                  ? `boutique${total > 1 ? "s" : ""} trouvée${total > 1 ? "s" : ""}`
+                  : `bien${total > 1 ? "s" : ""} trouvé${total > 1 ? "s" : ""}`}
               </p>
               <SortSelect />
             </div>
@@ -102,7 +104,7 @@ export default async function PropertyCataloguePage({
             {results.length === 0 ? (
               <div className="rounded-xl border border-dashed border-[var(--color-stone-300)] bg-white px-6 py-20 text-center text-[var(--color-stone-500)]">
                 {isRent
-                  ? "Aucun bien à louer ne correspond à votre recherche."
+                  ? "Aucune boutique à louer ne correspond à votre recherche."
                   : "Aucun bien à vendre ne correspond à votre recherche."}
               </div>
             ) : (
