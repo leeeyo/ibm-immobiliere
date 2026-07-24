@@ -7,15 +7,6 @@ import { SITE, CONTACT } from "@/lib/constants/site";
 import { listActiveLocations } from "@/lib/actions/locations";
 import { getWebsiteSettings } from "@/lib/website-settings";
 
-const LOCATIONS = [
-  "Ariana",
-  "Tunis",
-  "Sousse",
-  "Boumhal",
-  "Borj Cedria",
-  "Riadh El Andalous",
-];
-
 /**
  * Cinematic hero: full-bleed image (with lazy-loaded video on capable clients)
  * behind editorial typography + search card.
@@ -127,15 +118,15 @@ export default async function Hero() {
       {/* ─── Locations marquee — ground strip ─── */}
       <div className="relative z-10 mt-6 shrink-0 border-t border-white/10 bg-[var(--color-navy-950)]/85 pb-[env(safe-area-inset-bottom,0px)] backdrop-blur-md lg:mt-auto">
         <Marquee className="py-2 sm:py-2.5" slow>
-          {LOCATIONS.flatMap((l, i) => [
+          {searchLocations.flatMap((location) => [
             <span
-              key={`loc-${l}-${i}`}
+              key={`loc-${location.id}`}
               className="font-display text-lg tracking-tight text-white sm:text-xl"
             >
-              {l}
+              {location.name}
             </span>,
             <span
-              key={`dot-${l}-${i}`}
+              key={`dot-${location.id}`}
               className="h-2 w-2 rounded-full bg-[var(--color-gold-400)]"
               aria-hidden
             />,
